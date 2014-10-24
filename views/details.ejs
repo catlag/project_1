@@ -12,8 +12,10 @@
 </p> 
 <a href="<%=results.source.sourceRecipeUrl%>">Recipe</a> 
 <ul>
- <form action="/myrecipes/:id" method="POST">
- <input type="hidden" value="<%=results.id%>" name="results[id]">
+results
+ <form action="/myrecipes/ <%=results["id"]  %>" method="POST">
+ <input type="hidden" value="<%=results.images[results.images.length - 1].hostedMediumUrl%>" name="results[imgUrl]">
+ <input type="hidden" value="<%=results["name"]%>" name="results[name]">
   <input type="submit" value="Add to List">
 </form>
 

@@ -39,6 +39,14 @@ if (!error && response.statusCode == 200) {
   });  
 });
 
+app.get('/myrecipes', function(req,res){
+	db.Food.findAll().done(function(err, recipes){
+		res.render('myrecipes',{ allFoods: recipes});
+	});
+	
+});
+
+
 app.get('/details/:id', function(req, res){
     var foodId = req.params.id;
     var obj;
@@ -54,10 +62,29 @@ app.get('/details/:id', function(req, res){
   });
 });
 
-app.post('/myrecipes:id', function(req,res){
+app.post('/myrecipes/:id', function(req,res){
 	var foodId = req.params.id;
+	var name = req.body.results.name;
+	var imageUrl= req.body.results.imgUrl;
 
-})
+
+
+	db.Food.create({
+		foodId: foodId,
+		imageUrl: imageUrl, 
+		name: name}).done(function(err,success){
+			if(err) {
+				console.log(err);
+				res.render('details');
+			}
+			else {
+				res.redirect('/myrecipes');
+			}
+		});
+	});
+
+
+
 
 
 

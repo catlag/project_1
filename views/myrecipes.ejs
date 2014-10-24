@@ -1,0 +1,17 @@
+<% include partials/header %>
+<a href='/'>Home</a>
+<h1>These are all your foods!</h1>
+
+ <% allFoods.forEach(function(foods){ %>
+	
+	<h4> 
+		<a href="/details/<%=foods.foodId %>" ><%= foods.name %></a> 
+	</h4>
+	<br>
+		<img src="<%= foods.imageUrl %>" alt=""> 
+	
+ 	<% }) %>
+
+
+
+<% include partials/footer %>

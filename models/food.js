@@ -2,8 +2,9 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Food = sequelize.define("Food", {
-    foodName: DataTypes.STRING,
-    foodId: DataTypes.STRING
+    name: DataTypes.STRING,
+    foodId: DataTypes.TEXT,
+    imageUrl: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
