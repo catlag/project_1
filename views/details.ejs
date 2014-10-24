@@ -1,0 +1,23 @@
+<% include partials/header %>
+<h1>Food Y'all</h1>
+
+<p><%= results["name"] %></p>
+
+<img src="<%= results.images[results.images.length - 1].hostedMediumUrl %>">
+<p>Makes: <%= results["yield"] %></p>
+<p>Time: <%= results["totalTime"] %></p>
+<p>Ingredients:  <% results["ingredientLines"].forEach(function(ingredient){ %>
+				<li><%= ingredient %></li>
+	<% }) %>
+</p> 
+<a href="<%=results.source.sourceRecipeUrl%>">Recipe</a> 
+<ul>
+ <form action="/myrecipes/:id" method="POST">
+ <input type="hidden" value="<%=results.id%>" name="results[id]">
+  <input type="submit" value="Add to List">
+</form>
+
+
+
+
+<% include partials/footer %>

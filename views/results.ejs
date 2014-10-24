@@ -1,0 +1,18 @@
+<% include partials/header %>
+<h1>Recipes Y'all</h1>
+
+
+
+ <% Results.forEach(function (food) {%>
+
+     <a href="/details/<%=food.id%>"><%=food.recipeName%></a>  
+     <br>
+     <img src="<%= food.smallImageUrls %>" alt="food image">
+     <br>
+            <% }) %>
+<br>
+
+
+
+
+<% include partials/footer %>
