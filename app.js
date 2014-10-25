@@ -8,7 +8,8 @@ var express = require("express"),
   flash = require('connect-flash'),
   methodOverride = require('method-override'),
   request = require('request'),
-  app = express();
+  app = express(),
+  routeMiddleware = require("./config/routes");
  
 
 
@@ -18,12 +19,72 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 require('locus');
 
+app.use(session( {
+  secret: 'dasecret',
+  name: 'macademia nut',
+
+  maxage: 3600000
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+
+passport.serializeUser(function(user, done){
+  console.log("SERIALIZED JUST RAN!");
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done){
+  console.log("DESERIALIZED JUST RAN!");
+  db.User.find({
+      where: {
+        id: id
+      }
+    })
+    .done(function(error,user){
+      done(error, user);
+    });
+});
+
 
 //index
-app.get('/', function(req,res){
+app.get('/', routeMiddleware.preventLoginSignup, function(req,res){
 	res.render('index');
 });
 
+app.get('/signup', routeMiddleware.preventLoginSignup, function(req,res){
+    res.render('signup', { username: ""});
+});
+
+app.get('/login', routeMiddleware.preventLoginSignup, function(req,res){
+    res.render('login', {message: req.flash('loginMessage'), username: ""});
+});
+
+app.post('/submit', function(req,res){
+
+  db.User.createNewUser(req.body.username, req.body.password,
+  function(err){
+    res.render("signup", {message: err.message, username: req.body.username});
+  },
+  function(success){
+    res.render("index", {message: success.message});
+  });
+});
+
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+
+app.get('/logout', function(req,res){
+  req.logout();
+  res.redirect('/');
+});
 
 app.get('/search', function(req, res){
 
