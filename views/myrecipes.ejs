@@ -1,20 +1,39 @@
 <% include partials/header %>
-<a href='/'>Home</a>
-<h1>These are all your foods!</h1>
 
+
+<a href="/logout" class = "btn btn-danger btn-lg">Log out here</a>
+
+<form action="/search" method="GET">
+	<p>
+		<label for="Food">Search</label>
+		<br>
+		<input type="text" name="recipe" >
+	</p>
+	<p>
+		<input type="submit" >
+	</p>
+</form>
+
+<% if (!allFoods){ %>
+<h1>You have no foods!</h1>
+
+<%} else if (allFoods !== null ) { %>
+<h1>These are all your foods!</h1>
  <% allFoods.forEach(function(foods){ %>
 	
 	<h4> 
+	<% console.log(foods.foodId) %>
 		<a href="/details/<%=foods.foodId %>" ><%= foods.name %></a> 
 	</h4>
 	<br>
 		<img src="<%= foods.imageUrl %>" alt=""> 
+	<form action="/myrecipes/<%=foods.foodId%>/delete?_method=delete" method="POST">
+	 <input type="submit" value="Delete">
+	</form>
 	
- 	<% }) %>
+ 	<% })} %>
+ 	<%  %>
 
-
-<!-- Classic Margherita Pizza -->
-<!-- Classic-margherita-pizza-308087 -->
 
 
 <% include partials/footer %>

@@ -46,6 +46,7 @@ passport.deserializeUser(function(id, done){
     })
     .done(function(error,user){
       done(error, user);
+      // console.log(user);
     });
 });
 
@@ -70,13 +71,13 @@ app.post('/submit', function(req,res){
     res.render("signup", {message: err.message, username: req.body.username});
   },
   function(success){
-    res.render("index", {message: success.message});
+    res.render("myrecipes", {message: success.message});
   });
 });
 
 
 app.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/myrecipes',
   failureRedirect: '/login',
   failureFlash: true
 }));
@@ -95,13 +96,15 @@ var url = "http://api.yummly.com/v1/api/recipes?_app_id=83f9f74b&_app_key=e5effb
 request(url, function (error, response, body) {
 if (!error && response.statusCode == 200) {
       var recipes = JSON.parse(body);
+    
       res.render('results', {Results: recipes.matches});
     }
   });  
 });
 
-app.get('/myrecipes', function(req,res){
-	db.Food.findAll().done(function(err, recipes){
+app.get('/myrecipes', routeMiddleware.checkAuthentication, function(req,res){
+	db.Food.findAll().done(function(err, recipes){;
+    console.log(recipes.foodId)
 		res.render('myrecipes',{ allFoods: recipes});
 	});
 	
@@ -111,9 +114,10 @@ app.get('/myrecipes', function(req,res){
 app.get('/details/:id', function(req, res){
     var foodId = req.params.id;
     var obj;
+    console.log(foodId);
 
     var url ="http://api.yummly.com/v1/api/recipe/" + foodId + "?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef";
-    console.log(url);
+
 
     request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -127,8 +131,6 @@ app.post('/myrecipes/:id', function(req,res){
 	var foodId = req.params.id;
 	var name = req.body.results.name;
 	var imageUrl= req.body.results.imgUrl;
-
-
 
 	db.Food.create({
 		foodId: foodId,
@@ -144,9 +146,29 @@ app.post('/myrecipes/:id', function(req,res){
 		});
 	});
 
+app.delete('/myrecipes/:id/delete', function(req,res){
+  db.Food.find({ where: { foodId: req.params.id}}).success(function(food){
+    food.destroy().success(function(){
+    res.redirect('/myrecipes'); 
+    });
+  }); 
+});
 
+app.get('/location', function(req, res){
 
+var id = req.body.results.id;
+var name = req.body.results.name;
+var imgUrl = req.body.results.imgUrl;
 
+var url = "http://api.yummly.com/v1/api/recipes?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef&q=" + name;
+
+request(url, function (error, response, body) {
+if (!error && response.statusCode == 200) {
+      var recipes = JSON.parse(body);
+      res.render('location', {Results: recipes.matches});
+    }
+  });  
+});
 
 
 
