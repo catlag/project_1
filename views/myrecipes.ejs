@@ -1,23 +1,29 @@
 <% include partials/header %>
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="/">Grubber</a>
 
+        <ul>
+            <li><a href="/myrecipes">My Recipes</a></li>
+            <li><a href="/logout">Log Out</a></li>
+        	<li>
+	            <form action="/search" class="pure-form" method="GET">	
+					<input type="text" class="pure-input-1-3 pure-input-rounded"name="recipe" >
+					<button type="submit" class="pure-button">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</li>	
+        </ul>
+    </div>
+</div>
 
-<a href="/logout" class = "btn btn-danger btn-lg">Log out here</a>
-
-<form action="/search" method="GET">
-	<p>
-		<label for="Food">Search</label>
-		<br>
-		<input type="text" name="recipe" >
-	</p>
-	<p>
-		<input type="submit" >
-	</p>
-</form>
+<div class="page-body results-heading">
 
 <% if (!allFoods){ %>
 <h1>You have no foods!</h1>
 
-<%} else if (allFoods !== null ) { %>
+<%} else if (allFoods) { %>
 <h1>These are all your foods!</h1>
  <% allFoods.forEach(function(foods){ %>
 	
@@ -28,12 +34,12 @@
 	<br>
 		<img src="<%= foods.imageUrl %>" alt=""> 
 	<form action="/myrecipes/<%=foods.foodId%>/delete?_method=delete" method="POST">
-	 <input type="submit" value="Delete">
+	 <button class="button-warning pure-button" type="submit"> Delete</button> 
 	</form>
 	
  	<% })} %>
  	<%  %>
 
-
+<div>
 
 <% include partials/footer %>
