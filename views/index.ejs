@@ -1,24 +1,40 @@
 <% include partials/header %>
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="/">Grubber</a>
 
-<h1>Grubber</h1>
+        <ul>
+            <li class="pure-menu-selected"><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Login</a></li>
+            
+        </ul>
+    </div>
+</div>
 
-<form action="/search" method="GET">
-	<p>
-		<label for="Food">Search</label>
-		<br>
-		<input type="text" name="recipe" >
-	</p>
-	<p>
-		<input type="submit" >
-	</p>
-</form>
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Grubber</h1>
+        <p class="splash-subhead">
+            Search for recipes and find ingredients near you
+        </p>
+        <p>
+        <form action="/search" class="pure-form search-form" method="GET">	
+			<input type="text" name="recipe" >
+			<button type="submit" class="pure-button">
+				<i class="fa fa-search"></i>
+				
+			</button>
+		</form>
+        </p>
+    </div>
+</div>
 
 
 
-<a href="/signup" class = "btn btn-primary btn-lg">Sign up</a>
-	&nbsp
 
-<a href="/login" class = "btn btn-primary btn-lg">Log in</a>
+
+
+
 
 
 <% include partials/footer %>
