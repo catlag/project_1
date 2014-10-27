@@ -104,7 +104,6 @@ if (!error && response.statusCode == 200) {
 
 app.get('/myrecipes', routeMiddleware.checkAuthentication, function(req,res){
 	db.Food.findAll().done(function(err, recipes){;
-    console.log(recipes.foodId)
 		res.render('myrecipes',{ allFoods: recipes});
 	});
 	
@@ -160,24 +159,42 @@ var foodId = req.body.results;
 var name = req.body.name;
 var match;
 
-
 var url = "http://api.yummly.com/v1/api/recipes?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef&q=" + name;
-
 
 request(url, function (error, response, body) {
 if (!error && response.statusCode == 200) {
       var recipes = JSON.parse(body);
       for (var i = recipes.matches.length - 1; i >= 0; i--) {
         if (recipes.matches[i].id == foodId)
-           match = recipes.matches[i].id;
+           match = recipes.matches[i].ingredients;
+            
           }
         
-      res.render('location', {match});
+      res.render('location', {Results: match});
     }
   });  
 });
 
+app.get('/stores', function(req, res){
 
+var zipcode = req.body.zipcode;
+var ingredients = req.body.ingredients;
+
+console.log(zipcode);
+
+var url = "http://www.SupermarketAPI.com/api.asmx/StoresByZip?APIKEY=d364ba8062&ZipCode=" + zipcode;
+
+request(url, function (error, response, body) {
+if (!error && response.statusCode == 200) {
+        console.log('PARSING');
+
+     var details = JSON.parse(body);
+     console.log('THIS IS THE BODY');
+      console.log(body);
+      res.render('stores' );
+    }
+  });  
+});
 
 
 

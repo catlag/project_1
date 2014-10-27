@@ -1,25 +1,17 @@
 <% include partials/header %>
 <h1>Location Location</h1>
 
-<form action="/search" method="GET">
+<form action="/stores" method="GET">
 	<p>
 		<label for="ZipCode">Enter Your Zip Code</label>
 		<br>
 		<input type="text" name="zipcode" >
+		<input type="hidden" value="Results" name="ingredients" >
 	</p>
 	<p>
 		<input type="submit" >
 	</p>
 </form>
-
-
-<% Results.forEach(function (food) {%>
-
-		<%= food %>
-    
-   
-            <% }) %>
-
 
 
 
