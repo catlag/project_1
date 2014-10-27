@@ -154,24 +154,28 @@ app.delete('/myrecipes/:id/delete', function(req,res){
   }); 
 });
 
-app.get('/location', function(req, res){
+app.post('/location', function(req, res){
 
-var id = req.body.results.id;
-var name = req.body.results.name;
-var imgUrl = req.body.results.imgUrl;
+var foodId = req.body.results;
+var name = req.body.name;
+var match;
+
 
 var url = "http://api.yummly.com/v1/api/recipes?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef&q=" + name;
+
 
 request(url, function (error, response, body) {
 if (!error && response.statusCode == 200) {
       var recipes = JSON.parse(body);
-      res.render('location', {Results: recipes.matches});
+      for (var i = recipes.matches.length - 1; i >= 0; i--) {
+        if (recipes.matches[i].id == foodId)
+           match = recipes.matches[i].id;
+          }
+        
+      res.render('location', {match});
     }
   });  
 });
-
-
-
 
 
 

@@ -1,14 +1,25 @@
 <% include partials/header %>
 <h1>Location Location</h1>
 
+<form action="/search" method="GET">
+	<p>
+		<label for="ZipCode">Enter Your Zip Code</label>
+		<br>
+		<input type="text" name="zipcode" >
+	</p>
+	<p>
+		<input type="submit" >
+	</p>
+</form>
+
+
 <% Results.forEach(function (food) {%>
 
-     <a href="/details/<%=food.id%>"><%=food.recipeName%></a>  
-     <br>
-     <img src="<%= food.smallImageUrls %>" alt="food image">
-     <br>
+		<%= food %>
+    
+   
             <% }) %>
-<br>
+
 
 
 
