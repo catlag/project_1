@@ -1,12 +1,16 @@
 <% include partials/header %>
 <h1>Location Location</h1>
 
+<% console.log(Results); %>
+
 <form action="/stores" method="GET">
 	<p>
-		<label for="ZipCode">Enter Your Zip Code</label>
+		<label for="city">City</label>
 		<br>
-		<input type="text" name="zipcode" >
-		<input type="hidden" value="Results" name="ingredients" >
+		<input type="text" name="city" >
+		<label for="state">State</label>
+		<input type="text" name="state" >
+		<input type="hidden" value="Results" name="Results" >
 	</p>
 	<p>
 		<input type="submit" >

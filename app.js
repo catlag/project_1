@@ -9,7 +9,8 @@ var express = require("express"),
   methodOverride = require('method-override'),
   request = require('request'),
   app = express(),
-  routeMiddleware = require("./config/routes");
+  routeMiddleware = require("./config/routes"),
+  parseString = require('xml2js').parseString;
  
 
 
@@ -52,7 +53,7 @@ passport.deserializeUser(function(id, done){
 
 
 //index
-app.get('/', routeMiddleware.preventLoginSignup, function(req,res){
+app.get('/', function(req,res){
 	res.render('index');
 });
 
@@ -172,6 +173,7 @@ app.post('/location', function(req, res){
 var foodId = req.body.results;
 var name = req.body.name;
 var match;
+var document;
 
 var url = "http://api.yummly.com/v1/api/recipes?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef&q=" + name;
 
@@ -179,34 +181,41 @@ request(url, function (error, response, body) {
 if (!error && response.statusCode == 200) {
       var recipes = JSON.parse(body);
       for (var i = recipes.matches.length - 1; i >= 0; i--) {
-        if (recipes.matches[i].id == foodId)
+        if (recipes.matches[i].id == foodId){
            match = recipes.matches[i].ingredients;
-            
+
           }
-        
+
+      }
       res.render('location', {Results: match});
     }
   });  
 });
 
 
-// get all store in zipcode
+// get all stores in zipcode
 app.get('/stores', function(req, res){
 
-var zipcode = req.body.zipcode;
-var ingredients = req.body.ingredients;
+var city = req.query.city;
+var state = req.query.state;
+var ingredients = req.query.ingredients;
 
-console.log(zipcode);
+
+var url = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity="+city+"&SelectedState="+ state ;
 
 var url = "http://www.SupermarketAPI.com/api.asmx/StoresByZip?APIKEY=d364ba8062&ZipCode=" + zipcode;
 
+console.log(url);
+
 request(url, function (error, response, body) {
 if (!error && response.statusCode == 200) {
-        console.log('PARSING');
 
-     var details = JSON.parse(body);
-     console.log('THIS IS THE BODY');
-      console.log(body);
+ parseString(body, function (err, result) {
+    console.log(result);
+    console.log('STORE NAME');
+    console.log(result.ArrayOfStore.Store);
+    });
+
       res.render('stores' );
     }
   });  
