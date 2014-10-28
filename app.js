@@ -33,12 +33,12 @@ app.use(flash());
 
 
 passport.serializeUser(function(user, done){
-  console.log("SERIALIZED JUST RAN!");
+  // console.log("SERIALIZED JUST RAN!");
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done){
-  console.log("DESERIALIZED JUST RAN!");
+  // console.log("DESERIALIZED JUST RAN!");
   db.User.find({
       where: {
         id: id
@@ -77,7 +77,7 @@ app.post('/submit', function(req,res){
     res.render("signup", {message: err.message, username: req.body.username});
   },
   function(success){
-    res.render("myrecipes", {message: success.message });
+    res.render("myrecipes", {message: success.message, allFoods: null });
   });
 });
 
@@ -109,10 +109,10 @@ if (!error && response.statusCode == 200) {
 // show all recipes
 app.get('/myrecipes', routeMiddleware.checkAuthentication, function(req,res){
 
-  req.user.getFoods().done(function(err, foods){
+    req.user.getFoods().done(function(err, foods){
+      console.log(foods);
     res.render('myrecipes', { allFoods: foods});
   });
-
 });
 
 
@@ -133,7 +133,7 @@ app.get('/details/:id', function(req, res){
 });
 
 
-// add recipe to list
+// ADD RECIPES
 app.post('/myrecipes/:id', function(req,res){
 	var foodId = req.params.id;
 	var name = req.body.results.name;
@@ -148,13 +148,12 @@ console.log(req.user);
       imageUrl: imageUrl 
     }
   }).done(function(err, food, created){
+    console.log("adding food", food);
+    console.log("food was created?", created);
     req.user.addFood(food);
     res.redirect('/myrecipes');
   });
 });
-
-
-
 
 
 // delete recipe from list
