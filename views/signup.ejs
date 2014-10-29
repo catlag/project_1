@@ -1,0 +1,45 @@
+<% include partials/header %>
+
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="/">Grubber</a>
+
+        <ul>
+	            <form action="/search" class="pure-form" method="GET">	
+					<input type="text" class="pure-input pure-input-rounded"name="recipe" >
+					<button type="submit" class="pure-button ">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</li>	
+        </ul>
+    </div>
+</div>
+
+
+<div class="results-heading">
+<h1> Sign Up Form</h1>
+
+		<% if(typeof message !== 'undefined') {%>
+			<div id="alert">
+    		<a class="alert" href="#alert"><%= message %></a>
+			</div>
+		<% }%>
+		
+<br>
+
+<form action="/submit" class="pure-form pure-form-aligned" method = "post">
+	<p>
+		<label for="username">Username: </label> <input type="text" name="username" id="username" autofocus value = <%=username %>>
+	</p>
+	<p>
+	<label for="password">Password: </label> <input type="password" name="password" id="password">
+	</p>
+	<p>
+	<input type="submit" value="Sign up!" class = "pure-button pure-button-primary">
+	</p>
+	<a href="/login">Already have an account? Log in here</a>
+</form>
+</div>
+
+<% include partials/footer %>

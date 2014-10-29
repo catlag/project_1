@@ -11,11 +11,19 @@
     </div>
 </div>
 
+
+
 <div class="splash-container">
     <div class="splash">
+    <% if(typeof message !== 'undefined') {%>
+            <div id="alert">
+            <a class="alert" href="#alert"><%= message %></a>
+            </div>
+        <% }%>
+        
         <h1 class="splash-head">Grubber</h1>
         <p class="splash-subhead">
-            Search for recipes and find ingredients near you
+            Search for foods
         </p>
         <p>
         <form action="/search" class="pure-form search-form" method="GET">	
@@ -28,6 +36,7 @@
         </p>
     </div>
 </div>
+
 
 
 

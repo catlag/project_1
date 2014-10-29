@@ -1,0 +1,23 @@
+<% include partials/header %>
+
+<h1>hello</h1>
+
+ <%console.log(Stores)  %>
+
+<% Stores.forEach( function (store) { %>
+<% if(store.Storename.length > 0){ %>
+<p>
+Name: <%= store.Storename %>
+<br>
+Id: <%= store.StoreId %>
+<br>
+Address: <%= store.Address %>
+<br>
+</p>
+<% } %>
+
+<% }) %>
+
+<a href="/">Go back</a>
+
+<% include partials/footer %>

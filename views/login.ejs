@@ -1,0 +1,44 @@
+<% include partials/header%>
+
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="/">Grubber</a>
+
+        <ul>
+        	<li>
+	            <form action="/search" class="pure-form nav-search" method="GET">	
+					<input type="text" class="pure-input pure-input-rounded"name="recipe" >
+					<button type="submit" class="pure-button ">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</li>	
+        </ul>
+    </div>
+</div>
+
+<div class="results-heading">
+	<h1>Login </h1>
+
+	<% if (message.length > 0) { %>
+		<div class = "alert alert-danger">
+		<%= message %>
+		</div>
+	<% } %>
+
+	<form action="/login" class="pure-form pure-form-aligned" method = "post">
+
+		<p>
+			<label for="user">Username:</label> <input type="text" name="username" id="user" autofocus value = "">
+		</p>
+		<p>
+			<label for="pass">Password:</label> <input type="password" name="password" id="pass">
+		</p>
+		<p>
+			<input type="submit" value="Log In" class ="pure-button pure-button-primary">
+		</p>
+	</form>
+			<a href="/signup">Don't have an account? Create one here</a>
+</div>
+
+<% include partials/footer %>

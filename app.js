@@ -111,7 +111,6 @@ if (!error && response.statusCode == 200) {
 app.get('/myrecipes', routeMiddleware.checkAuthentication, function(req,res){
 
     req.user.getFoods().done(function(err, foods){
-      console.log(foods);
     res.render('myrecipes', { allFoods: foods});
   });
 });
@@ -121,7 +120,7 @@ app.get('/myrecipes', routeMiddleware.checkAuthentication, function(req,res){
 app.get('/details/:id', function(req, res){
     var foodId = req.params.id;
     var obj;
-    console.log(foodId);
+
 
     var url ="http://api.yummly.com/v1/api/recipe/" + foodId + "?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef";
 
@@ -140,7 +139,6 @@ app.post('/myrecipes/:id', function(req,res){
 	var name = req.body.results.name;
 	var imageUrl= req.body.results.imgUrl;
 
-console.log(req.user);
 
   db.Food.findOrCreate({
     where: {
@@ -149,8 +147,6 @@ console.log(req.user);
       imageUrl: imageUrl 
     }
   }).done(function(err, food, created){
-    console.log("adding food", food);
-    console.log("food was created?", created);
     req.user.addFood(food);
     res.redirect('/myrecipes');
   });
@@ -173,7 +169,7 @@ app.post('/location', function(req, res){
 var foodId = req.body.results;
 var name = req.body.name;
 var match;
-var document;
+
 
 var url = "http://api.yummly.com/v1/api/recipes?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef&q=" + name;
 
@@ -183,7 +179,6 @@ if (!error && response.statusCode == 200) {
       for (var i = recipes.matches.length - 1; i >= 0; i--) {
         if (recipes.matches[i].id == foodId){
            match = recipes.matches[i].ingredients;
-
           }
 
       }
@@ -198,27 +193,40 @@ app.get('/stores', function(req, res){
 
 var city = req.query.city;
 var state = req.query.state;
-var ingredients = req.query.ingredients;
+var ingredient = req.query.ingredient;
+var info = [];
 
 
-var url = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity="+city+"&SelectedState="+ state ;
+var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity=" +city+"&SelectedState="+ state;
 
-var url = "http://www.SupermarketAPI.com/api.asmx/StoresByZip?APIKEY=d364ba8062&ZipCode=" + zipcode;
+console.log(nextUrl);
 
-console.log(url);
 
-request(url, function (error, response, body) {
+request(nextUrl, function (error, response, body) {
+
 if (!error && response.statusCode == 200) {
 
- parseString(body, function (err, result) {
-    console.log(result);
-    console.log('STORE NAME');
-    console.log(result.ArrayOfStore.Store);
-    });
+ parseString(body, {explicitArray : false}, function (err, result) {
+      console.log(result);
+      if(typeof(result.ArrayOfStore.Store) === 'undefined'){
+        var message = "Oops, something went wrong!";
+        res.render('index', {message : message});
+      }
+      else {
+      console.log("THIS IS OUR RESULT", result.ArrayOfStore.Store);
+      for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {        
+        info.push(result.ArrayOfStore.Store[i]);
 
-      res.render('stores' );
+      }
+      res.render('stores', {Stores: info});
+      }
+    });
+      
+      // we want to take store IDs and then see if they have ingredients
     }
-  });  
+    
+  });
+    
 });
 
 

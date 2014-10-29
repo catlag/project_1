@@ -21,34 +21,67 @@
 <div class="results-heading">
 
 	<h1><%= results["name"] %></h1>
+	<div class="pure-g"> 
+		<div class="pure-u-sm-3-4">
+			<img src="<%= results.images[results.images.length - 1].hostedLargeUrl %>">
 
-	<img src="<%= results.images[results.images.length - 1].hostedLargeUrl %>">
-	<p>
-		Makes: <%= results["yield"] %>
-	</p>
-	<p>
-		Time: <%= results["totalTime"] %>
-	</p>
-	<p>Ingredients:  <% results["ingredientLines"].forEach(function(ingredient){ %>
-					<li><%= ingredient %></li>
-		<% }) %>
-	</p> 
-	<a href="<%=results.source.sourceRecipeUrl%>">Recipe</a> 
-	<ul>
+			<!-- <form action="/location" method="post">
+				<input type="hidden" value="<%=results.id%>" name="[results]id">
+				<input type="hidden" value="<%=results.name%>" name="name">
+				
+			</form> -->
+		
+			<form action="/myrecipes/<%=results['id']%>" method="POST">
+					<input type="hidden" value="<%=results.images[results.images.length - 1].hostedMediumUrl%>" name="results[imgUrl]">
+					<input type="hidden" value="<%=results["name"]%>" name="results[name]">
+					<button class="pure-button pure-button-primary" type="submit" >Add to recipes</button>
+			</form>
+			<p>Need an Ingredient? Find a store in your area!</p>
+			<form action="/stores" class="pure-form pure-form-aligned" method="GET">
+				<p>
+						<label for="ingredient">
+							Ingredient:
+						</label>
+						<input type="text" autofocus name="ingredient" >
+						<br>
+						<label for="city">
+							City:
+						</label>
+						<input type="text" name="city" >
+					<br>
+					<label for="state">
+						State
+					</label>
+        	<select name = "state" id="state">
+            <option>AL</option>
+            <option>CA</option>
+            <option>IL</option>
+        	</select>
 
+					<input type="hidden" value="Results" name="Results" >
+				</p>
+				<p>
+					<button class="pure-button pure-button-primary" type="submit">Search</button>
+				</p>
+			</form>
 
-		<form action="/location" method="post">
-			<input type="hidden" value="<%=results.id%>" name="[results]id">
-			<input type="hidden" value="<%=results.name%>" name="name">
-			<button class="pure-button pure-button-primary" type="submit">Ingredients Search</button>
-		</form>
-	
-		<form action="/myrecipes/<%=results['id']%>" method="POST">
-			<input type="hidden" value="<%=results.images[results.images.length - 1].hostedMediumUrl%>" name="results[imgUrl]">
-			<input type="hidden" value="<%=results["name"]%>" name="results[name]">
-			<button class="pure-button pure-button-primary" type="submit" >Add to recipes</button>
-		</form>
+		</div>
+		<div class="pure-u-sm-1-4 details">	
+			<p>
+				Time: <%= results["totalTime"] %>
+			</p>
+			<p>
+				Ingredients: 
+			<br>
+			 <% results["ingredientLines"].forEach(function(ingredient){ %>
+							<li><%= ingredient %></li> 
 
+				<% }) %>
+			</p> 
+			<a href="<%=results.source.sourceRecipeUrl%>/" target="_blank">Full Recipe</a> 
+			<ul>
+		</div>
+	</div>
 </div>
 
 
