@@ -50,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
               }
             }
             else{
-              success({message: 'Account created, please log in now'});
+              success();
             }
           });
         }

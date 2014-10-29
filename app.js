@@ -77,8 +77,10 @@ app.post('/submit', function(req,res){
   function(err){
     res.render("signup", {message: err.message, username: req.body.username});
   },
-  function(success){
-    res.render("myrecipes", {message: success.message, allFoods: null });
+   function(){
+    passport.authenticate('local')(req,res,function(){
+      res.redirect('/myrecipes');
+    });
   });
 });
 
@@ -197,9 +199,11 @@ var ingredient = req.query.ingredient;
 var info = [];
 
 
+
 var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity=" +city+"&SelectedState="+ state;
 
-console.log(nextUrl);
+var mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" 
+"&sensor=false&key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY";
 
 
 request(nextUrl, function (error, response, body) {
@@ -207,26 +211,33 @@ request(nextUrl, function (error, response, body) {
 if (!error && response.statusCode == 200) {
 
  parseString(body, {explicitArray : false}, function (err, result) {
-      console.log(result);
+     
       if(typeof(result.ArrayOfStore.Store) === 'undefined'){
         var message = "Oops, something went wrong!";
         res.render('index', {message : message});
       }
       else {
-      console.log("THIS IS OUR RESULT", result.ArrayOfStore.Store);
       for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {        
         info.push(result.ArrayOfStore.Store[i]);
-
       }
       res.render('stores', {Stores: info});
       }
     });
       
-      // we want to take store IDs and then see if they have ingredients
+      console.log(info);
     }
     
   });
-    
+
+info.forEach( function(store){
+
+}
+//   request(mapBoxUrl, function (error, response, body) {
+//     if (!error && response.statusCode == 200) {
+//         res.render('stores', body);
+//         console.log(body);
+//        } 
+//     });
 });
 
 
@@ -246,3 +257,5 @@ app.get('*', function(req,res){
 app.listen(3000, function(){
   "Server is listening on port 3000. Yay!";
 });
+
+
