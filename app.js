@@ -202,8 +202,8 @@ var info = [];
 
 var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity=" +city+"&SelectedState="+ state;
 
-var mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" 
-"&sensor=false&key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY";
+// var mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
+// "&sensor=false&key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY";
 
 
 request(nextUrl, function (error, response, body) {
@@ -220,7 +220,7 @@ if (!error && response.statusCode == 200) {
       for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {        
         info.push(result.ArrayOfStore.Store[i]);
       }
-      res.render('stores', {Stores: info});
+      res.render('stores');
       }
     });
       
@@ -229,16 +229,8 @@ if (!error && response.statusCode == 200) {
     
   });
 
-info.forEach( function(store){
-
-}
-//   request(mapBoxUrl, function (error, response, body) {
-//     if (!error && response.statusCode == 200) {
-//         res.render('stores', body);
-//         console.log(body);
-//        } 
-//     });
 });
+
 
 
 // log out

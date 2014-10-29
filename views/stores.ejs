@@ -1,22 +1,10 @@
-<% include partials/header %>
-
-<h1>hello</h1>
+<% include partials/header_2 %>
 
 
-<% Stores.forEach( function (store) { %>
-<% if(store.Storename.length > 0){ %>
-<p>
-Name: <%= store.Storename %>
-<br>
-Id: <%= store.StoreId %>
-<br>
-Address: <%= store.Address %>
-<br>
-</p>
-<% } %>
+<div id="map-canvas"></div>
 
-<% }) %>
 
-<a href="/">Go back</a>
 
-<% include partials/footer %>
+
+  </body>
+</html>
