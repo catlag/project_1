@@ -17,21 +17,75 @@
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
+
+
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY">
     </script>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: { lat: 37.7749295, lng: -122.4194155},
-
-          zoom: 10
-        };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
+ <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
       }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+
+var locations = [
+	[37.7325889802915, -122.4487140197085, "safeway"],
+	[37.73124, -122.4887959, "place 2"]
+
+];
+
+function initialize()
+{
+    var map = 
+        new google.maps.Map(document.getElementById('map-canvas'));
+    var bounds = new google.maps.LatLngBounds();
+    var infowindow = new google.maps.InfoWindow();
+     
+    for (var i in locations)
+    {
+        var p = locations[i];
+        var latlng = new google.maps.LatLng(p[0], p[1]);
+        bounds.extend(latlng);
+         
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title: p[2],
+            animation: google.maps.Animation.DROP
+        });
+     
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(this.title);
+            infowindow.open(map, this);
+        });
+    }
+     
+    map.fitBounds(bounds);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+
+
+
+
+  </script>
 
 </head>
 <body>

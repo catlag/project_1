@@ -1,4 +1,5 @@
 var express = require("express"),
+  async = require("async"),
   bodyParser = require("body-parser"),
   passport = require("passport"),
   passportLocal = require("passport-local"),
@@ -191,44 +192,64 @@ if (!error && response.statusCode == 200) {
 
 
 // get all stores in zipcode
+var geoLocateStore = function (store, callback) {
+  /*
+  { Storename: 'Safeway  ',
+    Address: '2350 Noriega St. 30th Ave.',
+    City: 'San Francisco',
+    State: 'CA',
+    Zip: ' ',
+    Phone: ' ',
+    StoreId: 'e6k3fjw79k' },
+  */
+  var mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY&address=";
+  mapUrl += store.Address + " ";
+  mapUrl += store.City + " ";
+  mapUrl += store.State;
+
+  console.log("geocoding " + store.Address);
+  request(mapUrl, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      // console.log("DONE geocoding " + store.Address);
+      console.log(body);
+      // store.Lat = "get the lat";
+      // store.Lon = "get the lon";
+      callback();
+    } else {
+      console.log("ERROR geocoding " + store.Address);
+      callback(error);
+    }
+  });
+};
 app.get('/stores', function(req, res){
 
-var city = req.query.city;
-var state = req.query.state;
-var ingredient = req.query.ingredient;
-var info = [];
+  var city = req.query.city;
+  var state = req.query.state;
+  var ingredient = req.query.ingredient;
+  var info = [];
 
+  var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity=" +city+"&SelectedState="+ state;
 
+  request(nextUrl, function (error, response, body) {
 
-var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity=" +city+"&SelectedState="+ state;
+    if (!error && response.statusCode == 200) {
 
-// var mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
-// "&sensor=false&key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY";
-
-
-request(nextUrl, function (error, response, body) {
-
-if (!error && response.statusCode == 200) {
-
- parseString(body, {explicitArray : false}, function (err, result) {
-     
-      if(typeof(result.ArrayOfStore.Store) === 'undefined'){
-        var message = "Oops, something went wrong!";
-        res.render('index', {message : message});
-      }
-      else {
-      for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {        
-        info.push(result.ArrayOfStore.Store[i]);
-      }
-      res.render('stores');
-      }
-    });
-      
-      console.log(info);
+      parseString(body, {explicitArray : false}, function (err, result) {
+        if(typeof(result.ArrayOfStore.Store) === 'undefined'){
+          var message = "Oops, something went wrong!";
+          res.render('index', {message : message});
+        } else {
+          for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {        
+            info.push(result.ArrayOfStore.Store[i]);
+          }
+          async.each(info, geoLocateStore, function (err) {
+            console.log(info);
+            res.render('stores', {Stores: info});
+          });
+        }
+      });
     }
-    
   });
-
 });
 
 
