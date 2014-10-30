@@ -120,7 +120,7 @@ app.get('/myrecipes', routeMiddleware.checkAuthentication, function(req,res){
 
 
 // show recipe details
-app.get('/details/:id', function(req, res){
+app.get('/details/:id', routeMiddleware.checkAuthentication, function(req, res){
     var foodId = req.params.id;
     var obj;
 
@@ -190,7 +190,7 @@ if (!error && response.statusCode == 200) {
   });  
 });
 
-
+var stores = [];
 // get all stores in zipcode
 var geoLocateStore = function (store, callback) {
   /*
@@ -202,31 +202,47 @@ var geoLocateStore = function (store, callback) {
     Phone: ' ',
     StoreId: 'e6k3fjw79k' },
   */
-  var mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY&address=";
+
+
+
+  // var mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY&address=";
+
+  var mapUrl = "http://open.mapquestapi.com/geocoding/v1/address?key=Fmjtd%7Cluurnu01lu%2Cb5%3Do5-9w8x10&callback=&inFormat=kvp&outFormat=json&location=";
   mapUrl += store.Address + " ";
   mapUrl += store.City + " ";
   mapUrl += store.State;
 
+
   console.log("geocoding " + store.Address);
   request(mapUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      // console.log("DONE geocoding " + store.Address);
-      console.log(body);
-      // store.Lat = "get the lat";
-      // store.Lon = "get the lon";
+   
+      var locations = JSON.parse(body);
+       if (locations.results[0].locations.length > 0){
+      store.Lat = locations.results[0].locations[0].latLng.lng;
+      store.Lon = locations.results[0].locations[0].latLng.lat;
+      var location = [];
+      location.push(store.Lat, store.Lon, store.name);
+      stores.push(location);
+    }
       callback();
     } else {
       console.log("ERROR geocoding " + store.Address);
       callback(error);
     }
+
   });
+  
 };
+
+
 app.get('/stores', function(req, res){
 
   var city = req.query.city;
   var state = req.query.state;
   var ingredient = req.query.ingredient;
   var info = [];
+  stores = [];
 
   var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity=" +city+"&SelectedState="+ state;
 
@@ -236,15 +252,15 @@ app.get('/stores', function(req, res){
 
       parseString(body, {explicitArray : false}, function (err, result) {
         if(typeof(result.ArrayOfStore.Store) === 'undefined'){
-          var message = "Oops, something went wrong!";
+          var message = "Oops, something went wrong! Try again.";
           res.render('index', {message : message});
         } else {
           for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {        
             info.push(result.ArrayOfStore.Store[i]);
           }
           async.each(info, geoLocateStore, function (err) {
-            console.log(info);
-            res.render('stores', {Stores: info});
+            console.log(stores);
+            res.render('stores', {Stores: stores});
           });
         }
       });

@@ -1,47 +1,66 @@
 <% include partials/header %>
-<div class="header">
-    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="/">Grubber</a>
+	<div class="header">
+	    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+	        <a class="pure-menu-heading" href="/">Grubber</a>
 
-        <ul>
-            
-            <li><a href="/logout">Log Out</a></li>
-        	<li>
-	            <form action="/search" class="pure-form" method="GET">	
-					<input type="text" class="pure-input pure-input-rounded"name="recipe" >
-					<button type="submit" class="pure-button">
-						<i class="fa fa-search"></i>
-					</button>
-				</form>
-			</li>	
-        </ul>
-    </div>
-</div>
+	        <ul>
+	            
+	            <li>
+	            	<a href="/logout">Log Out</a>
+	            </li>
+	        	<li>
+		            <form action="/search" class="pure-form" method="GET">	
+						<input type="text" class="pure-input pure-input-rounded"name="recipe" >
+						<button type="submit" class="pure-button">
+							<i class="fa fa-search"></i>
+						</button>
+					</form>
+				</li>	
+	        </ul>
+	    </div>
+	</div>
 
 
-<div class="page-body results-heading">
+	<div class="page-body results-heading">
 
 
-<% if (!allFoods){ %>
-<h1>You have no foods!</h1>
+		<% if (!allFoods || allFoods.length < 1){ %>
+			<h1>You have no foods!</h1>
+			<h3>Search for foods</h3>
+			<form action="/search" class="pure-form" method="GET">	
+				<input type="text" autofocus class="pure-input pure-input-rounded"name="recipe" >
+				<button type="submit" class="pure-button">
+					<i class="fa fa-search"></i>
+				</button>
+			</form>
 
-<%} else if (allFoods) { %>
-<h1>These are all your foods!</h1>
- <% allFoods.forEach(function(foods){ %>
-	
-	<h4> 
+		<%} else if (allFoods) { %>
+			<% console.log(allFoods); %>
+			<h1>These are all your foods!</h1>
+	</div>
+			<div class="pure-g" >
+				 <% allFoods.forEach(function(foods){ %>
+				 
+					
+						<div class="pure-u-1-5 myrecipe-box">
+							<div class="myrecipe-img">
+								<img src="<%= foods.imageUrl %>" alt=""> 
+							</div>
+							<div class="myrecipe-name">
+								<h4> 
+									<a href="/details/<%=foods.foodId %>" class="results-link"><%= foods.name %></a> 
+								</h4>
+								<br>
+							</div>
+							<div class="myrecipe-delete">
+								<form action="/myrecipes/<%=foods.foodId%>/delete?_method=delete" method="POST">
+								 <button class="pure-button myrecipe-button " type="submit"> Delete</button> 
+								</form>
+							</div>
+						</div>	
+				
+				<% })} %>
+			</div>
 
-		<a href="/details/<%=foods.foodId %>" ><%= foods.name %></a> 
-	</h4>
-	<br>
-		<img src="<%= foods.imageUrl %>" alt=""> 
-	<form action="/myrecipes/<%=foods.foodId%>/delete?_method=delete" method="POST">
-	 <button class="button-warning pure-button" type="submit"> Delete</button> 
-	</form>
-	
- 	<% })} %>
- 	<%  %>
-
-<div>
 
 <% include partials/footer %>

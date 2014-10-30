@@ -1,8 +1,16 @@
 body{
 	display: flex;
 	justify-content: center;
-
+/*    height:100%;
+    width:100%;*/
+    margin:0;
+    padding:0;
+    overflow: auto;
 }
+
+
+    
+
 
 #map-canvas { max-height: 500px; width: 500px; margin: 0; padding: 0;}
 
@@ -11,7 +19,7 @@ body{
 
 }
 
-a{
+.results-link{
 
     text-decoration: none;
 }
@@ -84,6 +92,15 @@ a{
 	padding-top: 50px;
 	padding-bottom: 15px;
 	text-align: center;
+
+}
+
+.recipes{
+    font-family: 'Metrophobic', sans-serif;
+    padding-top: 50px;
+    padding-bottom: 15px;
+    text-align: center;
+    background-color: #FFF4DE;
 }
 
 .results{
@@ -93,12 +110,63 @@ a{
 }
 
 .imgbox{
-	width: 150px;
-	height: 125px;
-	margin: 10px;
-	background-color: rgba(0,192,192,.3); 
-	 border-radius: 10px;
+	margin: .3em;
+	
+
 	padding-top: 20px;
+    /*flex-grow: 1;*/
+}
+
+.result-img{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 5px;
+    background-color: #9FA0A0; 
+    border-radius: 5px;
+}
+
+.photo-box-caption{
+    width: auto;
+/*    height: auto;*/
+font-size: 1em;
+padding: .5em;
+border-radius: 5px;
+/*margin-top: 5px;*/
+background-color: #FF5959;
+
+}
+
+/*myrecipes*/
+
+.myrecipe-box{
+    margin: 8px;
+    width: 180px;
+    border-left: 7px solid #40F0F0;
+    background-color: #FFF8EB;
+
+}
+
+ .myrecipe-name, .myrecipe-delete{
+    padding-left: 5px;
+
+}
+
+.myrecipe-img{
+    flex-shrink: 1;
+}
+
+.myrecipe-button{
+    background-color: black;
+    color: white;
+}
+/*links*/
+
+.results-link:link {
+    color: white;
+}
+
+.results-link:visited {
+    color: black;
 }
 
 /*buttons*/
@@ -116,6 +184,20 @@ a{
     margin-left: ;
 }
 
+/*footer*/
+
+.footer {
+    /*align-self: flex-end;*/
+    padding-top: 20px;
+    background: white;
+    border-top: 1px solid #9FA0A0;
+    color: #888;
+    text-align: center;
+    padding: 5px;
+}
+    .footer a {
+        color: #ddd;
+    }
 
 
 
@@ -190,8 +272,10 @@ a{
     position: relative;
     text-align: center;
     text-decoration: none;
+    padding-right: 5px;
+    padding-left: 5px;
     top: -45px;
-    width: 100%;
+    width: auto;
     -webkit-animation: alert 1s ease forwards;
        -moz-animation: alert 1s ease forwards;
         -ms-animation: alert 1s ease forwards;

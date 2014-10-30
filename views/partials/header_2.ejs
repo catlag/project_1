@@ -42,11 +42,12 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script>
 
-var locations = [
-	[37.7325889802915, -122.4487140197085, "safeway"],
-	[37.73124, -122.4887959, "place 2"]
+console.log(<%- JSON.stringify(Stores) %>)
 
-];
+var locations = <%- JSON.stringify(Stores) %>
+
+
+
 
 function initialize()
 {
@@ -55,10 +56,10 @@ function initialize()
     var bounds = new google.maps.LatLngBounds();
     var infowindow = new google.maps.InfoWindow();
      
-    for (var i in locations)
+    for (i = 0; i < locations.length; i++) 
     {
         var p = locations[i];
-        var latlng = new google.maps.LatLng(p[0], p[1]);
+        var latlng = new google.maps.LatLng(parseFloat(p[0]), parseFloat(p[1]));
         bounds.extend(latlng);
          
         var marker = new google.maps.Marker({

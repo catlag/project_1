@@ -23,20 +23,25 @@
 <div class="results-heading">
 
 	<h1>Recipes Y'all</h1>
-</div>
+
 
 <div class="results">
 <% Results.forEach(function (food) {%>
-    <div class="pure-u-1-3 imgbox">
-    	<div class="result-img">
-                <a href="/details/<%=food.id%>"><img src="<%= food.smallImageUrls %>" alt="food image"></a> 
+       
+        <div class="pure-u-7-24 imgbox">
+            <a href="/details/<%=food.id%>"> </a> 
+        	<div class="result-img">
+                    <a href="/details/<%=food.id%>"><img src="<%= food.smallImageUrls %>" alt="food image"></a> 
+            </div>
+                <aside class="photo-box-caption">
+                    <a href="/details/<%=food.id%>"><%=food.recipeName%></a>
+                </aside>
+              
         </div>
-            <aside class="photo-box-caption">
-                <a href="/details/<%=food.id%>"><%=food.recipeName%></a>
-            </aside>
-        </div>
+      
 
  <% }) %>
+</div>
 </div>
 
 
