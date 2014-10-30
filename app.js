@@ -225,7 +225,7 @@ var geoLocateStore = function (store, callback) {
       store.Lat = locations.results[0].locations[0].latLng.lat;
       store.Lon = locations.results[0].locations[0].latLng.lng;
       var location = [];
-      location.push(store.Lat, store.Lon, store.Storename);
+      location.push(store.Lat, store.Lon, store.Storename, store.Address );
       stores.push(location);
     }
       callback();
@@ -258,7 +258,7 @@ app.get('/stores', function(req, res){
           var message = "Oops, something went wrong! Try again.";
           res.render('index', {message : message});
         } else {
-          for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {        
+          for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {       
             info.push(result.ArrayOfStore.Store[i]);
           }
           async.each(info, geoLocateStore, function (err) {
