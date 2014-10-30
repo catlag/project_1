@@ -21,7 +21,6 @@
     "locus": "^0.1.0",
     "lodash": "^2.4.1",
     "method-override": "^2.3.0",
-    "node-geocoder": "^2.10.0",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "pg": "^3.6.2",
