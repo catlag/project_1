@@ -46,13 +46,12 @@ console.log(<%- JSON.stringify(Stores) %>)
 
 var locations = <%- JSON.stringify(Stores) %>
 
-
+console.log(locations)
 
 
 function initialize()
 {
-    var map = 
-        new google.maps.Map(document.getElementById('map-canvas'));
+    var map = new google.maps.Map(document.getElementById('map-canvas'));
     var bounds = new google.maps.LatLngBounds();
     var infowindow = new google.maps.InfoWindow();
      

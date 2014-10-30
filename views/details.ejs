@@ -1,5 +1,8 @@
 <% include partials/header %>
 
+
+
+
 <div class="header">
     <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
         <a class="pure-menu-heading" href="/">Grubber</a>
@@ -25,12 +28,6 @@
 		<div class="pure-u-sm-3-4">
 			<img src="<%= results.images[results.images.length - 1].hostedLargeUrl %>">
 
-			<!-- <form action="/location" method="post">
-				<input type="hidden" value="<%=results.id%>" name="[results]id">
-				<input type="hidden" value="<%=results.name%>" name="name">
-				
-			</form> -->
-		
 			<form action="/myrecipes/<%=results['id']%>" method="POST">
 					<input type="hidden" value="<%=results.images[results.images.length - 1].hostedMediumUrl%>" name="results[imgUrl]">
 					<input type="hidden" value="<%=results["name"]%>" name="results[name]">
@@ -53,9 +50,11 @@
 						State
 					</label>
         	<select name = "state" id="state">
-            <option>AL</option>
-            <option>CA</option>
-            <option>IL</option>
+        	<% for(i = 0; i < states.length; i++){ %> 
+            
+            <option><%= states[i] %> </option>
+            
+			 <% } %>
         	</select>
 
 					<input type="hidden" value="Results" name="Results" >

@@ -106,7 +106,7 @@ body{
 .results{
 	padding-top: 30px;
 	text-align: center;
-	flex-grow: 1;
+	/*flex-grow: 1;*/
 }
 
 .imgbox{

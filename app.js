@@ -119,6 +119,10 @@ app.get('/myrecipes', routeMiddleware.checkAuthentication, function(req,res){
 });
 
 
+
+var states = [ "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];
+
+
 // show recipe details
 app.get('/details/:id', routeMiddleware.checkAuthentication, function(req, res){
     var foodId = req.params.id;
@@ -130,7 +134,8 @@ app.get('/details/:id', routeMiddleware.checkAuthentication, function(req, res){
     request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var details = JSON.parse(body);
-      res.render('details', {results: details});
+      console.log(states.length);
+      res.render('details', {results: details, states:states});
       }
   });
 });
@@ -212,17 +217,15 @@ var geoLocateStore = function (store, callback) {
   mapUrl += store.City + " ";
   mapUrl += store.State;
 
-
-  console.log("geocoding " + store.Address);
   request(mapUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) {
    
       var locations = JSON.parse(body);
        if (locations.results[0].locations.length > 0){
-      store.Lat = locations.results[0].locations[0].latLng.lng;
-      store.Lon = locations.results[0].locations[0].latLng.lat;
+      store.Lat = locations.results[0].locations[0].latLng.lat;
+      store.Lon = locations.results[0].locations[0].latLng.lng;
       var location = [];
-      location.push(store.Lat, store.Lon, store.name);
+      location.push(store.Lat, store.Lon, store.Storename);
       stores.push(location);
     }
       callback();
