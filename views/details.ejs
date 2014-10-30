@@ -36,21 +36,21 @@
 						</button>
 					</form>
 					
-					<p>Need an Ingredient? Find a store in your area!</p>
-					<form action="/stores" class="pure-form pure-form-aligned " method="GET">
-							<label for="ingredient">
+					<p>Need an ingredient? Find a store in your area!</p>
+					<form action="/stores" class="pure-form pure-form-stacked " method="GET">
+							<!-- <label for="ingredient">
 								Ingredient:
-							</label>
-							<input type="text" autofocus name="ingredient" >
+							</label> -->
+							<input type="text" name="ingredient" placeholder="Ingredient">
 							<br>
-							<label for="city">
+							<!-- <label for="city">
 								City:
-							</label>
-							<input type="text" name="city" >
+							</label> -->
+							<input type="text" name="city" placeholder="City">
 						<br>
-							<label for="state">
+							<!-- <label for="state">
 								State
-							</label>
+							</label> -->
 			        		<select name = "state" id="state">
 			        	<% for(i = 0; i < states.length; i++){ %> 
 			            
