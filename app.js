@@ -170,29 +170,7 @@ app.delete('/myrecipes/:id/delete', function(req,res){
 });
 
 
-// get zipcode
-app.post('/location', function(req, res){
 
-var foodId = req.body.results;
-var name = req.body.name;
-var match;
-
-
-var url = "http://api.yummly.com/v1/api/recipes?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef&q=" + name;
-
-request(url, function (error, response, body) {
-if (!error && response.statusCode == 200) {
-      var recipes = JSON.parse(body);
-      for (var i = recipes.matches.length - 1; i >= 0; i--) {
-        if (recipes.matches[i].id == foodId){
-           match = recipes.matches[i].ingredients;
-          }
-
-      }
-      res.render('location', {Results: match});
-    }
-  });  
-});
 
 var stores = [];
 // get all stores in zipcode
@@ -209,7 +187,6 @@ var geoLocateStore = function (store, callback) {
 
 
 
-  // var mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY&address=";
 
   var mapUrl = "http://open.mapquestapi.com/geocoding/v1/address?key=Fmjtd%7Cluurnu01lu%2Cb5%3Do5-9w8x10&callback=&inFormat=kvp&outFormat=json&location=";
   mapUrl += store.Address + " ";
@@ -242,7 +219,7 @@ app.get('/stores', function(req, res){
 
   var city = req.query.city;
   var state = req.query.state;
-  var ingredient = req.query.ingredient;
+  // var ingredient = req.query.ingredient;
   var info = [];
   stores = [];
 

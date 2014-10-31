@@ -5,7 +5,12 @@
         <a class="pure-menu-heading" href="/">Grubber</a>
 
         <ul>
-            <li><a href="/myrecipes">My Recipes</a></li>
+            <li>
+            	<a href="/myrecipes">My Recipes</a>
+            </li>
+            <li>
+            	<a href="/logout">Log Out</a>
+            </li>
         	<li>
 	            <form action="/search" class="pure-form" method="GET">	
 					<input type="text" class="pure-input pure-input-rounded"name="recipe" >
@@ -24,7 +29,7 @@
 
 <div id="map-canvas"></div>
 
-
+<p>Geocoding Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png"></p>
 
 
 <% include partials/footer %>

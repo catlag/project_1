@@ -1,0 +1,23 @@
+html, body, #map-canvas {
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+}
+
+#map-canvas {
+	margin-top: 37px;
+	margin-bottom: 20px;
+}
+
+p{
+	margin: 0px;
+	float: right;
+}
+.home-menu {
+        text-align: left;
+    }
+
+.home-menu ul {
+            float: right;
+            
+    }

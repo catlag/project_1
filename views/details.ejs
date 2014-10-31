@@ -38,19 +38,13 @@
 					
 					<p>Need an ingredient? Find a store in your area!</p>
 					<form action="/stores" class="pure-form pure-form-stacked " method="GET">
-							<!-- <label for="ingredient">
-								Ingredient:
-							</label> -->
-							<input type="text" name="ingredient" placeholder="Ingredient">
-							<br>
-							<!-- <label for="city">
-								City:
-							</label> -->
+
+							<!-- input type="text" name="ingredient" placeholder="Ingredient">
+							<br> -->
+
 							<input type="text" name="city" placeholder="City">
 						<br>
-							<!-- <label for="state">
-								State
-							</label> -->
+
 			        		<select name = "state" id="state">
 			        	<% for(i = 0; i < states.length; i++){ %> 
 			            
@@ -68,19 +62,24 @@
 				
 		</div>
 		<div class="pure-u-sm-1-4 ingredients-sec">	
+
+		<% if (results["totalTime"]){ %>
 			<p>
 				Time: <%= results["totalTime"] %>
 			</p>
+			<% } %>
 			<p>
 				Ingredients: 
 			<br>
+			<ul class="ingredients-list">
 			 <% results["ingredientLines"].forEach(function(ingredient){ %>
-							<li><%= ingredient %></li> 
 
+							<li><%= ingredient %></li> 
 				<% }) %>
+			</ul>
 			</p> 
-			<a href="<%=results.source.sourceRecipeUrl%>/" target="_blank">Full Recipe</a> 
-			<ul>
+			Get the full recipe:
+			<a href="<%=results.source.sourceRecipeUrl%>/" target="_blank"><%= results.source.sourceDisplayName %> </a>
 		</div>
 		
 	</div>

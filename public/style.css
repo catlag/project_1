@@ -10,11 +10,6 @@ body{
 
 
 
-#map-canvas {
- height: 500px; 
- width: 500px; 
-top: 100px;
-}
 
 .search-form {
 	margin: auto;
@@ -154,6 +149,7 @@ top: 100px;
 
  .myrecipe-name, .myrecipe-delete{
     padding-left: 5px;
+   height: 50px;
 
 }
 
@@ -168,6 +164,10 @@ top: 100px;
 
 
 /*DETAILS PAGE*/
+ .ingredients-list{
+   padding-left: 30px;
+}
+
 .details-box{
     width: 600px;
 }
