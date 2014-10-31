@@ -134,7 +134,6 @@ app.get('/details/:id', routeMiddleware.checkAuthentication, function(req, res){
     request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var details = JSON.parse(body);
-      console.log(states.length);
       res.render('details', {results: details, states:states});
       }
   });
@@ -262,7 +261,7 @@ app.get('/stores', function(req, res){
             info.push(result.ArrayOfStore.Store[i]);
           }
           async.each(info, geoLocateStore, function (err) {
-            console.log(stores);
+            // console.log(stores);
             res.render('stores', {Stores: stores});
           });
         }
@@ -272,13 +271,11 @@ app.get('/stores', function(req, res){
 });
 
 
-
 // log out
 app.get('/logout', function(req,res){
   req.logout();
   res.redirect('/');
 });
-
 
 
 app.get('*', function(req,res){
