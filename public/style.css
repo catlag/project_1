@@ -114,6 +114,10 @@ body{
     /*flex-grow: 1;*/
 }
 
+a.thing{
+    display: block
+}
+
 .result-img{
     padding-top: 20px;
     padding-bottom: 20px;

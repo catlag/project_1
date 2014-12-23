@@ -14,7 +14,6 @@ var express = require("express"),
   parseString = require('xml2js').parseString;
  
 
-
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -98,13 +97,16 @@ app.get('/search', function(req, res){
 
 var searchTerm = req.query.recipe;
 
-var url = "http://api.yummly.com/v1/api/recipes?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef&q=" +searchTerm +"&requirePictures=true";
+var url = "http://api.yummly.com/v1/api/recipes?_app_id=" +process.env.YUMMLY_APP_ID +"&_app_key=" + process.env.YUMMLY_APP_KEY+ "&q=" +searchTerm +"&requirePictures=true";
 
 request(url, function (error, response, body) {
 if (!error && response.statusCode == 200) {
       var recipes = JSON.parse(body);
 
       res.render('results', {Results: recipes.matches});
+    }
+    else{
+      console.log(error);
     }
   });  
 });
@@ -188,7 +190,7 @@ var geoLocateStore = function (store, callback) {
 
 
 
-  var mapUrl = "http://open.mapquestapi.com/geocoding/v1/address?key=Fmjtd%7Cluurnu01lu%2Cb5%3Do5-9w8x10&callback=&inFormat=kvp&outFormat=json&location=";
+  var mapUrl = "http://open.mapquestapi.com/geocoding/v1/address?key=" +process.env.MAPQUEST_KEY+"&callback=&inFormat=kvp&outFormat=json&location=";
   mapUrl += store.Address + " ";
   mapUrl += store.City + " ";
   mapUrl += store.State;
@@ -223,7 +225,9 @@ app.get('/stores', function(req, res){
   var info = [];
   stores = [];
 
-  var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY=d364ba8062&SelectedCity=" +city+"&SelectedState="+ state;
+
+
+  var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY="+process.env.SUPERMARKET_KEY+ "&SelectedCity=" +city+"&SelectedState="+ state;
 
   request(nextUrl, function (error, response, body) {
 
