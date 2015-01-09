@@ -26,40 +26,120 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script>
 
-console.log(<%- JSON.stringify(Stores) %>)
+var markets = [];
+var markets_location = []
 
-var locations = <%- JSON.stringify(Stores) %>
-
-console.log(locations)
-
-
-function initialize()
-{
-    var map = new google.maps.Map(document.getElementById('map-canvas'));
-    var bounds = new google.maps.LatLngBounds();
-    var infowindow = new google.maps.InfoWindow();
-     
-    for (i = 0; i < locations.length; i++) 
-    {
-        var p = locations[i];
-        var latlng = new google.maps.LatLng(parseFloat(p[0]), parseFloat(p[1]));
-        bounds.extend(latlng);
-         
-        var marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-            title: p[2],
-            animation: google.maps.Animation.DROP
-        });
-     
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent(this.title);
-            infowindow.open(map, this);
-        });
-    }
-     
-    map.fitBounds(bounds);
+function getResults(zip) {
+    // or
+    // function getResults(lat, lng) {
+    $.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        // submit a get request to the restful service zipSearch or locSearch.
+        url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + zip,
+        // or
+        // url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng,
+        dataType: 'jsonp',
+        // jsonp: false,
+        jsonpCallback: 'searchResultsHandler'
+    }).done;
 }
+// iterate through the JSON result object.
+function searchResultsHandler(data, callback) {
+  console.log("searchResultsHandler")
+    for (var key in data) {
+        var results = data[key];
+        for (var i = 0; i < results.length; i++) {
+            markets.push(results[i].id)            
+                
+        }
+    };
+    getMarkets();
+}
+
+function getMarkets(){
+  for (var i = 0; i < markets.length; i ++) {
+    console.log(markets[i]);
+    $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            // submit a get request to the restful service mktDetail.
+            url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + markets[i],
+            dataType: 'jsonp',
+            success: function(data){
+              console.log(data.marketdetails.GoogleLink)
+              markets_location.push(data);
+            }
+        })
+    };    
+}
+
+
+// getResults(94080)
+//////////////////////////////////////////////////
+
+
+// function getGeocode(){
+//   $.ajax({
+//     type: "GET",
+//     contentType: "application/json; charset=utf-8",
+//     url: "http://open.mapquestapi.com/geocoding/v1/address?key=" +process.env.MAPQUEST_KEY+"&callback=&inFormat=kvp&outFormat=json&location=147ClayAve+SouthSanFrancisco+";
+//   mapUrl += store.Address + " ";
+//   mapUrl += store.City + " ";
+//   mapUrl += store.State;,
+//     dataType: "jsonp",
+//     success: function(data){
+//         console.log(data.results);
+//     }
+//   })
+// }
+
+// getGeocode()
+//////////////////////////////////////////////////
+
+
+
+function showValues(){
+  var input = $("#location").serialize();
+    console.log(input);
+}
+
+function initialize() {
+  var mapOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng(-34.397, 150.644)
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+}
+
+// function initialize()
+// {
+//     var map = new google.maps.Map(document.getElementById('map-canvas'));
+//     var bounds = new google.maps.LatLngBounds();
+//     var infowindow = new google.maps.InfoWindow();
+     
+//     for (i = 0; i < locations.length; i++) 
+//     {
+//         var p = locations[i];
+//         var latlng = new google.maps.LatLng(parseFloat(p[0]), parseFloat(p[1]));
+//         bounds.extend(latlng);
+         
+//         var marker = new google.maps.Marker({
+//             position: latlng,
+//             map: map,
+//             title: p[2],
+//             animation: google.maps.Animation.DROP
+//         });
+     
+//         google.maps.event.addListener(marker, 'click', function() {
+//             infowindow.setContent(this.title);
+//             infowindow.open(map, this);
+//         });
+//     }
+     
+//     map.fitBounds(bounds);
+// }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 

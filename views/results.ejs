@@ -22,20 +22,22 @@
 
 <div class="results-heading">
 
-	<h1>Recipes Y'all</h1>
+	<h1>Recipes</h1>
 
 
 <div class="results">
 <div class="pure-g"></div>
 <% Results.forEach(function (food) {%>
        
-        <div class="pure-u-7-24 imgbox">
-            <a href="/details/<%=food.id%>"> </a> 
-        	<div class="result-img food_img">
-                    <a href="/details/<%=food.id%>"><img src="<%= food.smallImageUrls %>" alt="food image"></a> 
+        <div class="pure-u-1-6 imgbox">
+        	<div onclick="location.href='/details/<%=food.id%>';" class="result_img food_info">
+                    <a href="/details/<%=food.id%>">
+                        <%=food.recipeName%>
+                    </a> 
             </div>
-                <aside class="photo-box-caption thing">
-                    <%=food.recipeName%>
+                <aside onclick="location.href='/details/<%=food.id%>';" class="food_img">
+                    
+                     <a href="/details/<%=food.id%>"><img src="<%= food.smallImageUrls %>" alt="food image"></a>
                 </aside>
               
         </div>
@@ -48,15 +50,21 @@
 
 
 <script>
-$(".food_img").mouseenter(
+
+
+
+recipe_click = function(){
+
+}
+
+$(".food_info").mouseenter(
     function() {
         $( this ).next().show("slow");
     });
-$(".food_img").mouseleave(
+$(".food_info").mouseleave(
     function() {
-        $( this ).next().hide("slow");
+        $( this ).next().hide(1000);
     });
-
 
 </script>
 

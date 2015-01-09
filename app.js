@@ -11,7 +11,8 @@ var express = require("express"),
   request = require('request'),
   app = express(),
   routeMiddleware = require("./config/routes"),
-  parseString = require('xml2js').parseString;
+  parseString = require('xml2js').parseString,
+  geocoder = require('geocoder');
  
 
 app.set('view engine', 'ejs');
@@ -92,12 +93,15 @@ app.post('/login', passport.authenticate('local', {
 }));
 
 
+
 // search for foods
 app.get('/search', function(req, res){
 
+
+
 var searchTerm = req.query.recipe;
 
-var url = "http://api.yummly.com/v1/api/recipes?_app_id=" +process.env.YUMMLY_APP_ID +"&_app_key=" + process.env.YUMMLY_APP_KEY+ "&q=" +searchTerm +"&requirePictures=true";
+var url = "http://api.yummly.com/v1/api/recipes?_app_id=" +process.env.YUMMLY_APP_ID +"&_app_key=" + process.env.YUMMLY_APP_KEY+ "&q=" +searchTerm +"&requirePictures=true&maxResult=30&start=0";
 
 request(url, function (error, response, body) {
 if (!error && response.statusCode == 200) {
@@ -184,10 +188,7 @@ var geoLocateStore = function (store, callback) {
     State: 'CA',
     Zip: ' ',
     Phone: ' ',
-    StoreId: 'e6k3fjw79k' },
-  */
-
-
+    StoreId: 'e6k3fjw79k' },  */
 
 
   var mapUrl = "http://open.mapquestapi.com/geocoding/v1/address?key=" +process.env.MAPQUEST_KEY+"&callback=&inFormat=kvp&outFormat=json&location=";
@@ -219,36 +220,37 @@ var geoLocateStore = function (store, callback) {
 
 app.get('/stores', function(req, res){
 
-  var city = req.query.city;
-  var state = req.query.state;
-  // var ingredient = req.query.ingredient;
-  var info = [];
-  stores = [];
+  // var city = req.query.city;
+  // var state = req.query.state;
+  // // var ingredient = req.query.ingredient;
+  // var info = [];
+  // stores = [];
 
 
 
-  var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY="+process.env.SUPERMARKET_KEY+ "&SelectedCity=" +city+"&SelectedState="+ state;
+  // var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY="+process.env.SUPERMARKET_KEY+ "&SelectedCity=" +city+"&SelectedState="+ state;
 
-  request(nextUrl, function (error, response, body) {
+  // request(nextUrl, function (error, response, body) {
 
-    if (!error && response.statusCode == 200) {
+  //   if (!error && response.statusCode == 200) {
 
-      parseString(body, {explicitArray : false}, function (err, result) {
-        if(typeof(result.ArrayOfStore.Store) === 'undefined'){
-          var message = "Oops, something went wrong! Try again.";
-          res.render('index', {message : message});
-        } else {
-          for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {       
-            info.push(result.ArrayOfStore.Store[i]);
-          }
-          async.each(info, geoLocateStore, function (err) {
-            // console.log(stores);
-            res.render('stores', {Stores: stores});
-          });
-        }
-      });
-    }
-  });
+  //     parseString(body, {explicitArray : false}, function (err, result) {
+  //       if(typeof(result.ArrayOfStore.Store) === 'undefined'){
+  //         var message = "Oops, something went wrong! Try again.";
+  //         res.render('index', {message : message});
+  //       } else {
+  //         for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {       
+  //           info.push(result.ArrayOfStore.Store[i]);
+  //         }
+  //         async.each(info, geoLocateStore, function (err) {
+  //           // console.log(stores);
+  //           res.render('stores', {Stores: stores, states:states});
+  //         });
+  //       }
+  //     });
+  //   }
+  // });
+    res.render('stores', {states:states});
 });
 
 
