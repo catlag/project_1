@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <link rel="stylesheet" href="/pure-min.css">
 
   <link rel="stylesheet" href="/grids-responsive-min.css">
@@ -9,6 +10,7 @@
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="/map-style.css">
 
   <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
@@ -17,14 +19,12 @@
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
-
-
-    <script type="text/javascript"
+  <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY">
-    </script>
+  </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <script>
 
 var markets = [];
 var markets_location = []
@@ -32,6 +32,7 @@ var markets_location = []
 function getResults(zip) {
     // or
     // function getResults(lat, lng) {
+  markets =[];
     $.ajax({
         type: "GET",
         contentType: "application/json; charset=utf-8",
@@ -42,24 +43,30 @@ function getResults(zip) {
         dataType: 'jsonp',
         // jsonp: false,
         jsonpCallback: 'searchResultsHandler'
-    }).done;
+    });
 }
+
 // iterate through the JSON result object.
 function searchResultsHandler(data, callback) {
-  console.log("searchResultsHandler")
+  // console.log("searchResultsHandler")
+  // console.log(data);
     for (var key in data) {
         var results = data[key];
         for (var i = 0; i < results.length; i++) {
-            markets.push(results[i].id)            
-                
+            markets.push(results[i].id)                    
         }
     };
     getMarkets();
 }
 
+
+
 function getMarkets(){
+
+  console.log("getMarkets")
+  console.log(markets)
   for (var i = 0; i < markets.length; i ++) {
-    console.log(markets[i]);
+    // console.log(markets);
     $.ajax({
             type: "GET",
             contentType: "application/json; charset=utf-8",
@@ -67,16 +74,33 @@ function getMarkets(){
             url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + markets[i],
             dataType: 'jsonp',
             success: function(data){
-              console.log(data.marketdetails.GoogleLink)
-              markets_location.push(data);
+              // console.log(data.marketdetails.GoogleLink)
+              var yo = data.marketdetails.GoogleLink.split("");
+              console.log(yo);
+              var add = []
+              for(var i =0; i<yo.length; i++) {
+                if(yo[i] === "=") {
+                  for (var j =i+1; j<yo.length-i; j++) {
+                    if(yo[j] !== "(") {
+                      add.push(yo[j])
+                    } else {
+                      yo.length = 0;
+                    }
+                  }
+                }
+              }
+              add = add.join("")
+              console.log(add); 
+
+              // markets_location.push(data);
             }
         })
     };    
 }
 
-
 // getResults(94080)
-//////////////////////////////////////////////////
+
+//-------------------------------------------------
 
 var geocode_api = <%- JSON.stringify(geocode_api) %>
 function getGeocode(){
@@ -95,15 +119,13 @@ function getGeocode(){
 }
 
 getGeocode()
-//////////////////////////////////////////////////
-
-
-console.log(geocode_api);
 
 
 
+// --------------creates map and puts in map markers-------------------
 
 var locations = <%- JSON.stringify(Stores) %>
+console.log(locations)
 
 function initialize(){
 
@@ -143,7 +165,7 @@ if (locations !== null){
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 
-  </script>
+</script>
 
 </head>
 <body>

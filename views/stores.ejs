@@ -29,6 +29,7 @@
                   <br> -->
 
         <input type="text" name="city" placeholder="City">
+        <input id="zip" type="text" name="Zip" placeholder="Zip">
       <br>
 
             <select name = "state" id="state">
@@ -41,9 +42,11 @@
         <input type="hidden" value="Results" name="Results" >
 
       <p>
-        <button class="pure-button pure-button-primary search" type="submit">Search</button>
+
+        <button onclick="getResults(document.getElementById('zip').value)" class="pure-button pure-button-primary search" type="submit">Search</button>
       </p>
     </form>
+    <button onclick="getResults(document.getElementById('zip').value)"></button>
   </div>
   <!-- <h1>Stores in your area</h1> -->
   <div id="map-canvas"></div>
