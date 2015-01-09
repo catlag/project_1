@@ -23,21 +23,26 @@
     </div>
 </div>
 
-  <div class="form">
-    <form action="" class="pure-form">
+  <div class="form location">
+    <form action="/stores" class="pure-form pure-form-stacked " method="GET">
+                  <!-- input type="text" name="ingredient" placeholder="Ingredient">
+                  <br> -->
+
         <input type="text" name="city" placeholder="City">
       <br>
-        <select name = "state" id="state">
+
+            <select name = "state" id="state">
           <% for(i = 0; i < states.length; i++){ %> 
             
               <option><%= states[i] %> </option>
             
-          <% } %>
-        </select>
+       <% } %>
+          </select>
         <input type="hidden" value="Results" name="Results" >
-        <button onclick="showValues()" class="pure-button pure-button-primary">
-        Search
-        </button>
+
+      <p>
+        <button class="pure-button pure-button-primary search" type="submit">Search</button>
+      </p>
     </form>
   </div>
   <!-- <h1>Stores in your area</h1> -->

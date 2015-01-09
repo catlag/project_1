@@ -181,15 +181,6 @@ app.delete('/myrecipes/:id/delete', function(req,res){
 var stores = [];
 // get all stores in zipcode
 var geoLocateStore = function (store, callback) {
-  /*
-  { Storename: 'Safeway  ',
-    Address: '2350 Noriega St. 30th Ave.',
-    City: 'San Francisco',
-    State: 'CA',
-    Zip: ' ',
-    Phone: ' ',
-    StoreId: 'e6k3fjw79k' },  */
-
 
   var mapUrl = "http://open.mapquestapi.com/geocoding/v1/address?key=" +process.env.MAPQUEST_KEY+"&callback=&inFormat=kvp&outFormat=json&location=";
   mapUrl += store.Address + " ";
@@ -220,37 +211,40 @@ var geoLocateStore = function (store, callback) {
 
 app.get('/stores', function(req, res){
 
-  // var city = req.query.city;
-  // var state = req.query.state;
-  // // var ingredient = req.query.ingredient;
-  // var info = [];
-  // stores = [];
+  var city = req.query.city;
+  var state = req.query.state; // var ingredient = req.query.ingredient;
+  var info = [];
+  stores = [];
+  var geocode_api = process.env.MAPQUEST_KEY;
 
 
+  var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY="+process.env.SUPERMARKET_KEY+ "&SelectedCity=" +city+"&SelectedState="+ state;
+  
+if ( city !== undefined ){
+    request(nextUrl, function (error, response, body) {
 
-  // var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY="+process.env.SUPERMARKET_KEY+ "&SelectedCity=" +city+"&SelectedState="+ state;
+      if (!error && response.statusCode == 200) {
 
-  // request(nextUrl, function (error, response, body) {
-
-  //   if (!error && response.statusCode == 200) {
-
-  //     parseString(body, {explicitArray : false}, function (err, result) {
-  //       if(typeof(result.ArrayOfStore.Store) === 'undefined'){
-  //         var message = "Oops, something went wrong! Try again.";
-  //         res.render('index', {message : message});
-  //       } else {
-  //         for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {       
-  //           info.push(result.ArrayOfStore.Store[i]);
-  //         }
-  //         async.each(info, geoLocateStore, function (err) {
-  //           // console.log(stores);
-  //           res.render('stores', {Stores: stores, states:states});
-  //         });
-  //       }
-  //     });
-  //   }
-  // });
-    res.render('stores', {states:states});
+        parseString(body, {explicitArray : false}, function (err, result) {
+          if(typeof(result.ArrayOfStore.Store) === 'undefined'){
+            var message = "Oops, something went wrong! Try again.";
+            res.render('index', {message : message});
+          } else {
+            for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {       
+              info.push(result.ArrayOfStore.Store[i]);
+            }
+            async.each(info, geoLocateStore, function (err) {
+              // console.log(stores);
+              res.render('stores', {Stores: stores, states:states, geocode_api:geocode_api});
+            });
+          }
+        });
+      }
+    });
+  }
+ else{
+  res.render('stores', {Stores: null, states:states, geocode_api:geocode_api});
+ }   
 });
 
 
