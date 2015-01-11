@@ -213,13 +213,15 @@ app.get('/stores', function(req, res){
 
   var city = req.query.city;
   var state = req.query.state; // var ingredient = req.query.ingredient;
+  var zip = req.query.Zip;
   var info = [];
   stores = [];
   var geocode_api = process.env.MAPQUEST_KEY;
 
 
+console.log(zip);
   var nextUrl = "http://www.SupermarketAPI.com/api.asmx/StoresByCityState?APIKEY="+process.env.SUPERMARKET_KEY+ "&SelectedCity=" +city+"&SelectedState="+ state;
-  
+
 if ( city !== undefined ){
     request(nextUrl, function (error, response, body) {
 
@@ -235,7 +237,7 @@ if ( city !== undefined ){
             }
             async.each(info, geoLocateStore, function (err) {
               // console.log(stores);
-              res.render('stores', {Stores: stores, states:states, geocode_api:geocode_api});
+              res.render('stores', {Stores: stores, states:states, geocode_api:geocode_api, zip:zip});
             });
           }
         });
@@ -243,7 +245,7 @@ if ( city !== undefined ){
     });
   }
  else{
-  res.render('stores', {Stores: null, states:states, geocode_api:geocode_api});
+  res.render('stores', {Stores: null, states:states, geocode_api:geocode_api, zip:null});
  }   
 });
 

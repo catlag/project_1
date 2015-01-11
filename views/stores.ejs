@@ -23,15 +23,17 @@
     </div>
 </div>
 
+
   <div class="form location">
-    <form action="/stores" class="pure-form pure-form-stacked " method="GET">
+    <form action="/stores" class="pure-form " method="GET">
+      <fieldset class="pure-group">
                   <!-- input type="text" name="ingredient" placeholder="Ingredient">
                   <br> -->
 
         <input type="text" name="city" placeholder="City">
         <input id="zip" type="text" name="Zip" placeholder="Zip">
       <br>
-
+      </fieldset>
             <select name = "state" id="state">
           <% for(i = 0; i < states.length; i++){ %> 
             
@@ -40,70 +42,16 @@
        <% } %>
           </select>
         <input type="hidden" value="Results" name="Results" >
-
       <p>
-
-        <button onclick="getResults(document.getElementById('zip').value)" class="pure-button pure-button-primary search" type="submit">Search</button>
+        <button  class="pure-button pure-button-primary search" type="submit">Search</button>
       </p>
     </form>
-    <button onclick="getResults(document.getElementById('zip').value)"></button>
+    <p>Geocoding Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png"></p>
   </div>
   <!-- <h1>Stores in your area</h1> -->
-  <div id="map-canvas"></div>
-
-<p>Geocoding Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png"></p>
-
-<script type="text/javascript">
-    
-// function getResults(zip) {
-//     // or
-//     // function getResults(lat, lng) {
-//     $.ajax({
-//         type: "GET",
-//         contentType: "application/json; charset=utf-8",
-//         // submit a get request to the restful service zipSearch or locSearch.
-//         url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + zip,
-//         // or
-//         // url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng,
-//         dataType: 'jsonp',
-//         // jsonp: false,
-//         jsonpCallback: 'searchResultsHandler'
-//     }).done;
-// }
-// // iterate through the JSON result object.
-// function searchResultsHandler(data) {
-//     for (var key in data) {
-//         var results = data[key];
-//         for (var i = 0; i < results.length; i++) {
-//             getMarkets(results[i].id)            
-                
-//         }
-//     }
-// }
-
-// function getMarkets(id){
-//   console.log("hello" + id)
-//     $.ajax({
-//             type: "GET",
-//             contentType: "application/json; charset=utf-8",
-//             // submit a get request to the restful service mktDetail.
-//             url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + id,
-//             dataType: 'jsonp',
-//             jsonpCallback: 'detailResultHandler'
-//         })
-// }
-
-// //iterate through the JSON result object.
-// function detailResultHandler(detailresults) {
-//     for (var key in detailresults) {
-//         alert(key);
-//         var results = detailresults[key];
-//         alert(results['GoogleLink']);
-//     }
-// }
+  <div class="map" id="map-canvas"></div>
 
 
 
-// getResults(94080)
-</script>
+
 <% include partials/footer %>

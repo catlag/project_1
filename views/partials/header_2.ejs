@@ -19,117 +19,50 @@
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
-  <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAri8-XfDTUf1blrutB1Ebc4EbhVLaQMqY">
-  </script>
-
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
   <script>
 
-var markets = [];
-var markets_location = []
 
-function getResults(zip) {
-    // or
-    // function getResults(lat, lng) {
-  markets =[];
-    $.ajax({
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        // submit a get request to the restful service zipSearch or locSearch.
-        url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + zip,
-        // or
-        // url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng,
-        dataType: 'jsonp',
-        // jsonp: false,
-        jsonpCallback: 'searchResultsHandler'
-    });
-}
-
-// iterate through the JSON result object.
-function searchResultsHandler(data, callback) {
-  // console.log("searchResultsHandler")
-  // console.log(data);
-    for (var key in data) {
-        var results = data[key];
-        for (var i = 0; i < results.length; i++) {
-            markets.push(results[i].id)                    
-        }
-    };
-    getMarkets();
-}
-
-
-
-function getMarkets(){
-
-  console.log("getMarkets")
-  console.log(markets)
-  for (var i = 0; i < markets.length; i ++) {
-    // console.log(markets);
-    $.ajax({
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            // submit a get request to the restful service mktDetail.
-            url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + markets[i],
-            dataType: 'jsonp',
-            success: function(data){
-              // console.log(data.marketdetails.GoogleLink)
-              var yo = data.marketdetails.GoogleLink.split("");
-              console.log(yo);
-              var add = []
-              for(var i =0; i<yo.length; i++) {
-                if(yo[i] === "=") {
-                  for (var j =i+1; j<yo.length-i; j++) {
-                    if(yo[j] !== "(") {
-                      add.push(yo[j])
-                    } else {
-                      yo.length = 0;
-                    }
-                  }
-                }
-              }
-              add = add.join("")
-              console.log(add); 
-
-              // markets_location.push(data);
-            }
-        })
-    };    
-}
 
 // getResults(94080)
 
 //-------------------------------------------------
 
-var geocode_api = <%- JSON.stringify(geocode_api) %>
-function getGeocode(){
-  $.ajax({
-    type: "GET",
-    contentType: "application/json; charset=utf-8",
-    url: "http://open.mapquestapi.com/geocoding/v1/address?key="+geocode_api+"&callback=&inFormat=kvp&outFormat=json&location=147+Clay+Ave+South+San+Francisco+CA",
-  // mapUrl += store.Address + " ";
-  // mapUrl += store.City + " ";
-  // mapUrl += store.State;,
-    dataType: "json",
-    success: function(data){
-        console.log(data.results);
-    }
-  })
-}
+// var geocode_api = <%- JSON.stringify(geocode_api) %>
+// function getGeocode(){
+//   $.ajax({
+//     type: "GET",
+//     contentType: "application/json; charset=utf-8",
+//     url: "http://open.mapquestapi.com/geocoding/v1/address?key="+geocode_api+"&callback=&inFormat=kvp&outFormat=json&location=147+Clay+Ave+South+San+Francisco+CA",
+//   // mapUrl += store.Address + " ";
+//   // mapUrl += store.City + " ";
+//   // mapUrl += store.State;,
+//     dataType: "json",
+//     success: function(data){
+//         console.log(data.results);
+//     }
+//   })
+// }
 
-getGeocode()
+// getGeocode()
 
 
 
 // --------------creates map and puts in map markers-------------------
 
+function start(){
+
+}
+
+
 var locations = <%- JSON.stringify(Stores) %>
-console.log(locations)
+var zip = <%- JSON.stringify(zip) %>
+
 
 function initialize(){
 
 if (locations !== null){
+        getResults();
         var map = new google.maps.Map(document.getElementById('map-canvas'));
         var bounds = new google.maps.LatLngBounds();
         var infowindow = new google.maps.InfoWindow();
@@ -161,9 +94,87 @@ if (locations !== null){
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
+  }
 }
-}
+
 google.maps.event.addDomListener(window, 'load', initialize);
+
+//---------------------------------------------
+
+var markets = [];
+var markets_location = []
+
+function getResults() {
+
+    // or
+    // function getResults(lat, lng) {
+  markets =[];
+    $.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        // submit a get request to the restful service zipSearch or locSearch.
+        url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + zip,
+        // or
+        // url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng,
+        dataType: 'jsonp',
+        // jsonp: false,
+        jsonpCallback: 'searchResultsHandler'
+    });
+}
+
+// iterate through the JSON result object.
+function searchResultsHandler(data, callback) {
+  // console.log("searchResultsHandler")
+  // console.log(data);
+    for (var key in data) {
+        var results = data[key];
+        for (var i = 0; i < results.length; i++) {
+            markets.push(results[i].id)                    
+        }
+    };
+    getMarkets();
+}
+
+var places
+
+function getMarkets(){
+  for (var i = 0; i < markets.length; i ++) {
+    // console.log(markets);
+    $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            // submit a get request to the restful service mktDetail.
+            url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + markets[i],
+            dataType: 'jsonp',
+            success: function(data){
+              // console.log(data.marketdetails.GoogleLink)
+              var yo = data.marketdetails.GoogleLink.split("");
+              console.log(yo);
+              var add = []
+              for(var i =0; i<yo.length; i++) {
+                if(yo[i] === "=") {
+                  for (var j =i+1; j<yo.length-i; j++) {
+                    if(yo[j] !== "(") {
+                      add.push(yo[j])
+                    } else {
+                      yo.length = 0;
+                    }
+                  }
+                }
+              }
+              add = add.join("");
+              places = add.split("%2C%20");
+              locations.push(places);
+              initialize();
+
+              // markets_location.push(data);
+            }
+        })
+    }   
+}
+
+
+
 
 </script>
 
