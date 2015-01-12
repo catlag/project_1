@@ -12,7 +12,7 @@ html,body{
 
  #map-canvas {
   height: 100%; 
-  width: 80%;  
+  width: 90%;  
   margin-top: 60px;
   margin-right: 0px;
 
@@ -32,5 +32,9 @@ html,body{
 
 .location, .map{
   display: inline-block;
+}
+
+.locatiion{
+  z-index: 1000;
 }
 

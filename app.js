@@ -97,7 +97,7 @@ app.post('/login', passport.authenticate('local', {
 // search for foods
 app.get('/search', function(req, res){
 
-
+var yummly_api = process.env.YUMMLY_APP_KEY;
 
 var searchTerm = req.query.recipe;
 
@@ -107,7 +107,7 @@ request(url, function (error, response, body) {
 if (!error && response.statusCode == 200) {
       var recipes = JSON.parse(body);
 
-      res.render('results', {Results: recipes.matches});
+      res.render('results', {Results: recipes.matches, yummly_api:yummly_api});
     }
     else{
       console.log(error);
@@ -135,7 +135,7 @@ app.get('/details/:id', routeMiddleware.checkAuthentication, function(req, res){
     var obj;
 
 
-    var url ="http://api.yummly.com/v1/api/recipe/" + foodId + "?_app_id=83f9f74b&_app_key=e5effbbe06740d184e03db23a8b71bef";
+    var url ="http://api.yummly.com/v1/api/recipe/" + foodId + "?_app_id=83f9f74b&_app_key=" + process.env.YUMMLY_APP_KEY;
 
     request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {

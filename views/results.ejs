@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include partials/header_3 %>
 
 
 
@@ -27,17 +27,22 @@
 
 <div class="results">
 <div class="pure-g"></div>
+
 <% Results.forEach(function (food) {%>
        
         <div class="pure-u-1-6 imgbox">
         	<div onclick="location.href='/details/<%=food.id%>';" class="result_img food_info">
-                    <a href="/details/<%=food.id%>">
+                    <a class="food_name" href="/details/<%=food.id%>">
                         <%=food.recipeName%>
+                        
                     </a> 
+                    <img class="<%=food.id%>" src="<%= food.smallImageUrls %>" alt="food image">
+                    <p class="food">,<%= food.id %></p> 
+
             </div>
-                <aside onclick="location.href='/details/<%=food.id%>';" class="food_img">
+                <aside onclick="location.href='/details/<%=food.id%>';" class=" pure-img food_img">
                     
-                     <a href="/details/<%=food.id%>"><img src="<%= food.smallImageUrls %>" alt="food image"></a>
+                     <a href="/details/<%=food.id%>"><img class="pure-img food_img" src="<%= food.smallImageUrls %>" alt="food image"></a>
                 </aside>
               
         </div>
@@ -49,23 +54,6 @@
 </div>
 
 
-<script>
 
-
-
-recipe_click = function(){
-
-}
-
-$(".food_info").mouseenter(
-    function() {
-        $( this ).next().show("slow");
-    });
-$(".food_info").mouseleave(
-    function() {
-        $( this ).next().hide(1000);
-    });
-
-</script>
 
 <% include partials/footer %>

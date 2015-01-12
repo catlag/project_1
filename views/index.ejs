@@ -20,14 +20,16 @@
             <a class="alert" href="#alert"><%= message %></a>
             </div>
         <% }%>
-        
+      <div class="splash-box">
         <h1 class="splash-head">Grubber</h1>
+      </div>
+        
         <p class="splash-subhead">
             Search for foods
         </p>
         <p>
         <form action="/search" class="pure-form search-form" method="GET">	
-			<input autofocus required type="text" name="recipe" >
+			<input class="pure-input-2-3" autofocus required type="text" name="recipe" >
 			<button type="submit" class="pure-button">
 				<i class="fa fa-search"></i>
 				
