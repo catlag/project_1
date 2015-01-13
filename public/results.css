@@ -1,0 +1,53 @@
+results.cssbody{
+	display: flex;
+	/*justify-content: center;*/
+/*    height:100%;
+    width:100%;*/
+    margin:0;
+    padding:0;
+    overflow: auto;
+    background: #f1f1f1;
+}
+
+
+.search-form {
+	margin: auto;
+
+}
+
+.results-link{
+
+    text-decoration: none;
+}
+
+/*align menu header to left and float items to right*/
+.home-menu {
+        text-align: left;
+    }
+
+.home-menu ul {
+            float: right;
+            
+    }
+
+
+@media all and (max-width: 600px){
+  .splash-head {
+    font-size: 3em;
+    color: black;
+
+  }
+}
+
+p .photo-box-caption{
+    font-size: 30px;
+    margin: -5em 0 !important;
+}
+
+#results{
+
+}
+
+
+
+

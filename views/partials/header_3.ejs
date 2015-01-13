@@ -6,10 +6,12 @@
   <link rel="stylesheet" href="/grids-responsive-min.css">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/style.css">
   <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Metrophobic' rel='stylesheet' type='text/css'>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="/masonry.pkgd.min.js"></script>
+  <script type="text/javascript" src="/packery.pkgd.min.js"></script>
+    <link rel="stylesheet" href="/results.css">
 
 <script>
 var foodsId = [];
@@ -35,54 +37,28 @@ $(window).load(function() {
           foodUrl = data.images[data.images.length - 1].hostedLargeUrl;
           foodSrc.push({foodId:foodId, foodUrl:foodUrl}) 
         }
-      }).done(replace_image);
+      }).done(replace_image)
    }
     
-});
+})
+
 var single_food
 
 replace_image = function(){
   for(i = 0; i < foodSrc.length; i ++){
     single_food = foodSrc[i].foodId
     single_img = foodSrc[i].foodUrl
-    console.log(foodSrc[i].foodId)
-    console.log("finding")
-    console.log($("img." + single_food).attr("src", single_img))
+    $("img." + single_food).attr("src", single_img)
+
     
   }
 }
 
 
-image_find = function(data){
-    console.log("images")
-    console.log(foodId)
-    // console.log(data.images[data.images.length - 1].hostedLargeUrl);
-    foodSrc = data.images[data.images.length - 1].hostedLargeUrl
-    $('food_img').attr("src", 'foodSrc')
-}
 
-$(".food_info").mouseenter(
-    
-    function() {
-    foodId= $(this).find(".food_id").text();
-    console.log(foodId)
-     $.ajax({
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        url: "http://api.yummly.com/v1/api/recipe/" + foodId+ "?_app_id=83f9f74b&_app_key="+ yummly_api,
-        dataType: 'jsonp',
-        // jsonp: false,
-        jsonpCallback: 'image_find'
-    });
-        $( this ).next().show("slow");
-    });
-$(".food_info").mouseleave(
-    function() {
-        $( this ).next().hide(1000);
-    });
+
 
 </script>
 
 </head>
 <body>
-<div class="div_center">

@@ -1,6 +1,6 @@
 body{
 	display: flex;
-	justify-content: center;
+	/*justify-content: center;*/
 /*    height:100%;
     width:100%;*/
     margin:0;
@@ -87,6 +87,7 @@ body{
 
 /* This is the subheading that appears on the section */
 .splash-subhead {
+    font-size: 2em;
     color: white;
     letter-spacing: 0.05em;
     opacity: 0.8;
@@ -96,65 +97,31 @@ body{
 
 /*results page*/
 
+#results{
+
+}
+
 p.food{
   display: none;
 }
 
-.results-heading{
-    font-family: 'Metrophobic', sans-serif;
-	padding-top: 50px;
-	padding-bottom: 15px;
-	text-align: center;
-
-}
-
-.recipes{
-    font-family: 'Metrophobic', sans-serif;
-    padding-top: 50px;
-    padding-bottom: 15px;
-    text-align: center;
-    background-color: #FFF4DE;
-}
-
-.results{
-	padding-top: 30px;
-	text-align: center;
-	/*flex-grow: 1;*/
-}
+/* p.photo-box-caption {
+        position: relative;
+        width: 50%;
+        font-size: 20px;
+        word-wrap: normal;
+        top: -150px;
+        color: white;
+        text-align: left;
+    }
 
 .imgbox{
-	margin: .3em;
-   /* background-color: rgba(116,115, 115, .5);*/
-	
+  margin-top: -50px;
+  margin-bottom: -50px;
 
-	/*padding-top: 20px;*/
-    /*flex-grow: 1;*/
-}
+}*/
 
-a.food_img{
-    display: block
-}
 
-.result_img{
-    height: 50px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border: solid white 2px;
-    background-color: rgba(116,115, 115, .5); 
-
-}
-
-.food_img{
-    width: auto;
-/*    display: none;*/
-    font-size: 1em;
-    padding: .5em;
-    border-left: solid white 2px;
-    border-right:solid white 2px;
-    border-bottom:solid white 2px; 
-    background-color: rgba(253, 253, 253);
-
-}
 
 /*myrecipes*/
 
