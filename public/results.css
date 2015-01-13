@@ -1,17 +1,12 @@
-results.cssbody{
-	display: flex;
-	/*justify-content: center;*/
-/*    height:100%;
-    width:100%;*/
-    margin:0;
-    padding:0;
-    overflow: auto;
-    background: #f1f1f1;
-}
 
 
 .search-form {
 	margin: auto;
+
+}
+
+#results{
+    margin: 200px 50px 80px 50px;
 
 }
 
@@ -30,23 +25,17 @@ results.cssbody{
             
     }
 
-
-@media all and (max-width: 600px){
-  .splash-head {
-    font-size: 3em;
-    color: black;
-
-  }
+span{
+    position: relative;
+    top: -100px;
 }
 
 p .photo-box-caption{
-    font-size: 30px;
-    margin: -5em 0 !important;
+    font-size: 20px;
+    margin-top: -2em !important;
 }
 
-#results{
 
-}
 
 
 

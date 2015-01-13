@@ -1,8 +1,8 @@
 body{
 	display: flex;
-	/*justify-content: center;*/
-/*    height:100%;
-    width:100%;*/
+	justify-content: center;
+    height:100%;
+    width:100%;
     margin:0;
     padding:0;
     overflow: auto;
@@ -29,15 +29,6 @@ body{
             float: right;
             
     }
-
-
-@media all and (max-width: 600px){
-  .splash-head {
-    font-size: 3em;
-    color: black;
-
-  }
-}
 
 
 
@@ -95,33 +86,6 @@ body{
 
 }
 
-/*results page*/
-
-#results{
-
-}
-
-p.food{
-  display: none;
-}
-
-/* p.photo-box-caption {
-        position: relative;
-        width: 50%;
-        font-size: 20px;
-        word-wrap: normal;
-        top: -150px;
-        color: white;
-        text-align: left;
-    }
-
-.imgbox{
-  margin-top: -50px;
-  margin-bottom: -50px;
-
-}*/
-
-
 
 /*myrecipes*/
 
@@ -154,6 +118,11 @@ p.food{
 
 
 /*DETAILS PAGE*/
+
+div.results-heading{
+    margin-top: 100px;
+}
+
  .ingredients-list{
    padding-left: 30px;
 }

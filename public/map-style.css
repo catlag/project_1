@@ -6,22 +6,6 @@ html,body{
   display:; */
 }
 
-.form{
-  margin-left: 20px;
-}
-
- #map-canvas {
-  height: 100%; 
-  width: 90%;  
-  margin-top: 60px;
-  margin-right: 0px;
-
-}
-/*.map_form{
-  display: flex;
-}*/
-
-
 .home-menu {
   text-align: left;
 }
@@ -35,6 +19,23 @@ html,body{
 }
 
 .locatiion{
-  z-index: 1000;
+  display: inline;
 }
+
+
+ #map-canvas {
+  height: 90%; 
+  width: 80%;  
+  margin-top: 60px ;
+  margin-left: 350px;
+
+}
+
+div.form{
+  z-index: 1000;
+  position: absolute;
+  top: 100px;
+  left: 30px;
+}
+
 

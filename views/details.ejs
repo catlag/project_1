@@ -8,7 +8,11 @@
         <a class="pure-menu-heading" href="/">Grubber</a>
 
         <ul>
-            <li><a href="/myrecipes">My Recipes</a></li>
+           <li>
+            <a href="/myrecipes">My Recipes</a></li>
+        	<li>
+        	<li>
+            <a href="/stores">Stores</a></li>
         	<li>
 	            <form action="/search" class="pure-form" method="GET">	
 					<input type="text" class="pure-input pure-input-rounded"name="recipe" >
@@ -34,29 +38,6 @@
 						<button class="pure-button pure-button-primary" type="submit" >
 							Add to recipes
 						</button>
-					</form>
-					
-					<p>Need an ingredient? Find a store in your area!</p>
-					<form action="/stores" class="pure-form pure-form-stacked " method="GET">
-
-							<!-- input type="text" name="ingredient" placeholder="Ingredient">
-							<br> -->
-
-							<input type="text" name="city" placeholder="City">
-						<br>
-
-			        		<select name = "state" id="state">
-			        	<% for(i = 0; i < states.length; i++){ %> 
-			            
-			            	<option><%= states[i] %> </option>
-			            
-						 <% } %>
-			        	</select>
-							<input type="hidden" value="Results" name="Results" >
-						
-						<p>
-							<button class="pure-button pure-button-primary search" type="submit">Search</button>
-						</p>
 					</form>
 				</div>
 				

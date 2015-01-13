@@ -23,36 +23,7 @@
   <script>
 
 
-
-// getResults(94080)
-
-//-------------------------------------------------
-
-// var geocode_api = <%- JSON.stringify(geocode_api) %>
-// function getGeocode(){
-//   $.ajax({
-//     type: "GET",
-//     contentType: "application/json; charset=utf-8",
-//     url: "http://open.mapquestapi.com/geocoding/v1/address?key="+geocode_api+"&callback=&inFormat=kvp&outFormat=json&location=147+Clay+Ave+South+San+Francisco+CA",
-//   // mapUrl += store.Address + " ";
-//   // mapUrl += store.City + " ";
-//   // mapUrl += store.State;,
-//     dataType: "json",
-//     success: function(data){
-//         console.log(data.results);
-//     }
-//   })
-// }
-
-// getGeocode()
-
-
-
 // --------------creates map and puts in map markers-------------------
-
-function start(){
-
-}
 
 
 var locations = <%- JSON.stringify(Stores) %>
@@ -60,9 +31,6 @@ var zip = <%- JSON.stringify(zip) %>
 
 
 function initialize(){
-
-if (locations !== null){
-        getResults();
         var map = new google.maps.Map(document.getElementById('map-canvas'));
         var bounds = new google.maps.LatLngBounds();
         var infowindow = new google.maps.InfoWindow();
@@ -77,7 +45,6 @@ if (locations !== null){
                 position: latlng,
                 map: map,
                 title: p[2],
-                animation: google.maps.Animation.DROP
             });
          
             google.maps.event.addListener(marker, 'click', function() {
@@ -85,19 +52,11 @@ if (locations !== null){
                 infowindow.open(map, this);
             });
         }
-         
+
         map.fitBounds(bounds);
-}else{
-  var mapOptions = {
-    zoom: 8,
-    center: new google.maps.LatLng(-34.397, 150.644)
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-  }
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', getResults);
 
 //---------------------------------------------
 
@@ -105,7 +64,7 @@ var markets = [];
 var markets_location = []
 
 function getResults() {
-
+if (locations !== null){
     // or
     // function getResults(lat, lng) {
   markets =[];
@@ -119,7 +78,17 @@ function getResults() {
         dataType: 'jsonp',
         // jsonp: false,
         jsonpCallback: 'searchResultsHandler'
-    });
+    })
+  }
+  else {
+    var mapOptions = {
+    zoom: 5,
+    scrollwheel: false,
+    center: new google.maps.LatLng(-34.397, 150.644)
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+  }
 }
 
 // iterate through the JSON result object.
@@ -149,7 +118,6 @@ function getMarkets(){
             success: function(data){
               // console.log(data.marketdetails.GoogleLink)
               var yo = data.marketdetails.GoogleLink.split("");
-              console.log(yo);
               var add = []
               for(var i =0; i<yo.length; i++) {
                 if(yo[i] === "=") {
@@ -173,7 +141,11 @@ function getMarkets(){
     }   
 }
 
-
+var thing = $("#map-canvas");
+google.maps.event.addListener(thing, 'tilesloaded', function() {
+  console.log("done")
+  alert("done")
+});
 
 
 </script>

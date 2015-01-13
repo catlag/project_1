@@ -6,6 +6,7 @@
 
         <ul>
             <li><a href="/myrecipes">My Recipes</a></li>
+            <li><a href="/stores">Stores</a></li>
         	<li>
 	            <form action="/search" class="pure-form" method="GET">	
 					<input type="text" class="pure-input pure-input-rounded"name="recipe" >
@@ -20,19 +21,15 @@
 
 
 <div id="results" class="js-packery"
-  data-packery-options='{ "itemSelector": ".imgbox" , "gutter": 10, "columnWidth": 360}'>
+  data-packery-options='{ "itemSelector": ".imgbox" , "gutter": 0, "columnWidth":300, "isOriginTop":false}'>
 
 <% Results.forEach(function (food) {%>
        
 	<div onclick="location.href='/details/<%=food.id%>';" class="imgbox ">
-    <div style="height:200px;" class="food_img " >
-      <img  class="<%=food.id%> " src="" alt="food image">
+    <div class="food_img " >
+      <img class="<%=food.id%>" style="height:200px;width:300px"src="" >
       </img>
       </div>  
-      <p class="photo-box-caption">        
-        <%= food.recipeName %>        
-      </p> 
-     
       <p style="display:none;"class="food">,<%= food.id %></p> 
   </div>
               
