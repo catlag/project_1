@@ -232,7 +232,7 @@ if ( city !== undefined ){
             var message = "Oops, something went wrong! Try again.";
             res.render('index', {message : message});
           } else {
-            for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {       
+            for (var i = result.ArrayOfStore.Store.length - 1; i >= 0; i--) {      
               info.push(result.ArrayOfStore.Store[i]);
             }
             async.each(info, geoLocateStore, function (err) {

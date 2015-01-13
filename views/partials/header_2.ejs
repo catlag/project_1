@@ -31,7 +31,14 @@ var zip = <%- JSON.stringify(zip) %>
 
 
 function initialize(){
-        var map = new google.maps.Map(document.getElementById('map-canvas'));
+        console.log("hello")
+        console.log(locations)
+        var mapOptions = {
+          backgroundColor: "white",
+          zoom: 16,
+          scrollwheel: false,
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
         var bounds = new google.maps.LatLngBounds();
         var infowindow = new google.maps.InfoWindow();
          
@@ -44,7 +51,7 @@ function initialize(){
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
-                title: p[2],
+                title: p[3],
             });
          
             google.maps.event.addListener(marker, 'click', function() {
@@ -82,7 +89,7 @@ if (locations !== null){
   }
   else {
     var mapOptions = {
-    zoom: 5,
+    zoom: 10,
     scrollwheel: false,
     center: new google.maps.LatLng(-34.397, 150.644)
   };
@@ -116,7 +123,7 @@ function getMarkets(){
             url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + markets[i],
             dataType: 'jsonp',
             success: function(data){
-              // console.log(data.marketdetails.GoogleLink)
+              console.log(data)
               var yo = data.marketdetails.GoogleLink.split("");
               var add = []
               for(var i =0; i<yo.length; i++) {
@@ -124,14 +131,19 @@ function getMarkets(){
                   for (var j =i+1; j<yo.length-i; j++) {
                     if(yo[j] !== "(") {
                       add.push(yo[j])
-                    } else {
+                    } 
+                    else {
                       yo.length = 0;
                     }
+
                   }
                 }
               }
               add = add.join("");
-              places = add.split("%2C%20");
+              places = add.split("%2C%20") 
+              places[1] = places[1].replace("%20", "")
+              places.push("")
+              places.push(data.marketdetails.Address)
               locations.push(places);
               initialize();
 
