@@ -31,16 +31,51 @@ var zip = <%- JSON.stringify(zip) %>
 
 
 function initialize(){
-        console.log("hello")
-        console.log(locations)
+        var image = 'http://i.imgur.com/wcoXkm3.png'
+        var MY_MAPTYPE_ID = 'custom_style';
         var mapOptions = {
           backgroundColor: "white",
           zoom: 16,
           scrollwheel: false,
-        };
+          mapTypeControlOptions: {
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+    },
+    mapTypeId: MY_MAPTYPE_ID
+  };
         var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
         var bounds = new google.maps.LatLngBounds();
         var infowindow = new google.maps.InfoWindow();
+        var featureOpts = [
+    {
+      stylers: [
+        { hue: '#80B2FF' },
+        { visibility: 'simplified' },
+        { gamma: 0.5 },
+        { weight: 0.5 }
+      ]
+    },
+    {
+      elementType: 'labels',
+      stylers: [
+        { visibility: 'off' }
+      ]
+    },
+    {
+      featureType: 'water',
+      stylers: [
+        { color: '#002966' }
+      ]
+    }
+  ];
+        var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
+        var styledMapOptions = {
+    name: 'Custom Style'
+  };
+
+    var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
+
+  map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+
          
         for (i = 0; i < locations.length; i++) 
         {
@@ -51,12 +86,22 @@ function initialize(){
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
-                title: p[3],
+                icon: image,
+                title: p[2],
+                address: p[3],
+                description: p[4],
+                hours: p[5]
             });
          
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent(this.title);
+              if (this.description !== undefined ){
+                infowindow.setContent("<h3>"+this.title+"</h3>" + this.address+ "<br>" + this.description + "<br>" +this.hours );
+              }
+              else {
+                infowindow.setContent("<h3>"+this.title+"</h3>" + this.address);
+              }
                 infowindow.open(map, this);
+
             });
         }
 
@@ -88,16 +133,9 @@ if (locations !== null){
     })
   }
   else {
-    var mapOptions = {
-    zoom: 10,
-    scrollwheel: false,
-    center: new google.maps.LatLng(-34.397, 150.644)
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+    default_map();
   }
 }
-
 // iterate through the JSON result object.
 function searchResultsHandler(data, callback) {
   // console.log("searchResultsHandler")
@@ -142,8 +180,10 @@ function getMarkets(){
               add = add.join("");
               places = add.split("%2C%20") 
               places[1] = places[1].replace("%20", "")
-              places.push("")
+              places.push("Farmers' Market")
               places.push(data.marketdetails.Address)
+              places.push(data.marketdetails.Products)
+              places.push(data.marketdetails.Schedule)
               locations.push(places);
               initialize();
 
@@ -152,6 +192,59 @@ function getMarkets(){
         })
     }   
 }
+
+function default_map(){
+var map;
+var start = new google.maps.LatLng(26.119685, -97.294922);
+
+var MY_MAPTYPE_ID = 'custom_style';
+
+   {
+  var featureOpts = [
+    {
+      stylers: [
+        { hue: '#80B2FF' },
+        { visibility: 'simplified' },
+        { gamma: 0.5 },
+        { weight: 0.5 }
+      ]
+    },
+    {
+      elementType: 'labels',
+      stylers: [
+        { visibility: 'off' }
+      ]
+    },
+    {
+      featureType: 'water',
+      stylers: [
+        { color: '#002966' }
+      ]
+    }
+  ];
+
+  var mapOptions = {
+    zoom: 12,
+    center: start,
+    mapTypeControlOptions: {
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+    },
+    mapTypeId: MY_MAPTYPE_ID
+  };
+
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var styledMapOptions = {
+    name: 'Custom Style'
+  };
+
+  var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
+
+  map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+}
+}
+
 
 var thing = $("#map-canvas");
 google.maps.event.addListener(thing, 'tilesloaded', function() {
