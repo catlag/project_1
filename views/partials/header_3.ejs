@@ -29,7 +29,7 @@ $(window).load(function() {
      $.ajax({
         type: "GET",
         contentType: "application/json; charset=utf-8",
-        url: "http://api.yummly.com/v1/api/recipe/" +foodsId[i]+"?_app_id=83f9f74b&_app_key="+yummly_api,
+        url: "https://api.yummly.com/v1/api/recipe/" +foodsId[i]+"?_app_id=83f9f74b&_app_key="+yummly_api,
         dataType: 'jsonp',
         // jsonp: false,
         success: function(data){

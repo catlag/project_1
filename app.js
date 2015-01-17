@@ -11,8 +11,7 @@ var express = require("express"),
   request = require('request'),
   app = express(),
   routeMiddleware = require("./config/routes"),
-  parseString = require('xml2js').parseString,
-  geocoder = require('geocoder');
+  parseString = require('xml2js').parseString;
  
 
 app.set('view engine', 'ejs');
