@@ -37,8 +37,11 @@ body{
 /*DETAILS PAGE*/
 
 div.results-heading{
-    margin-top: 100px;
+    margin: 100px 100px 100px 50px ;
+/*    margin-right: 100px;
+    margin-left: 100px;*/
     width: 100%;
+    background-color: rgba(208, 199, 201, 0.2);
 }
 
 /* .ingredients-list{
@@ -58,13 +61,27 @@ div.results-heading{
 .img-sec{
     height: 540px;
     width: 380px;
-    margin: 0px
+    margin: 0px;
+    font-size: 35px;
+    padding: 20px;
 }
 
+/*.details{
+    width: 100%;
+}*/
 
+.details-sec{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 100%;
+    border-left: 1px solid grey;
+    padding-left: 20px;
+    font-size: 20px;
+}
 
-
-
+/*.flavors-sec{
+    padding-left: 10px;
+}*/
 /*links*/
 
 .results-link:link {
