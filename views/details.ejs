@@ -1,4 +1,4 @@
-<% include partials/header%>
+<% include partials/details_header%>
 
 
 
@@ -8,9 +8,6 @@
         <a class="pure-menu-heading" href="/">Grubber</a>
 
         <ul>
-           <li>
-            <a href="/myrecipes">My Recipes</a></li>
-        	<li>
         	<li>
             <a href="/stores">Stores</a></li>
         	<li>
@@ -25,54 +22,89 @@
     </div>
 </div>
 
-<div class="results-heading">
+<div class=" pure-g results-heading">
+			<div class="pure-u-2-5 img-sec">
 
-	<h1><%= results["name"] %></h1>
-	<div class="pure-g details-box"> 
-		<div class="pure-u-sm-3-4 img-sec">
-			<img src="<%= results.images[results.images.length - 1].hostedLargeUrl %>">
-				<div class="form-sec">
-					<form action="/myrecipes/<%=results['id']%>" method="POST">
-						<input type="hidden" value="<%=results.images[results.images.length - 1].hostedMediumUrl%>" name="results[imgUrl]">
-						<input type="hidden" value="<%=results["name"]%>" name="results[name]">
-						<button class="pure-button pure-button-primary" type="submit" >
-							Add to recipes
-						</button>
-					</form>
+				<h1><%= results["name"] %></h1>
+				<img src="<%= results.images[results.images.length - 1].hostedLargeUrl %>">
+					<!-- div class="form-sec">
+						<form action="/myrecipes/<%=results['id']%>" method="POST">
+							<input type="hidden" value="<%=results.images[results.images.length - 1].hostedMediumUrl%>" name="results[imgUrl]">
+							<input type="hidden" value="<%=results["name"]%>" name="results[name]">
+							<button class="pure-button pure-button-primary" type="submit" >
+								Add to recipes
+							</button>
+						</form>
+					</div> -->
+					
+			</div>
+			<div class="pure-u-3-5 ">	
+				<div class="pure-g">
+					<div class="pure-u-2-5">
+						<% if (results["totalTime"]){ %>
+							<p>
+								Time: <%= results["totalTime"] %>
+							</p>
+							<% } %>
+							<p>
+								Ingredients: 
+							<br>
+							<ul class="ingredients-list">
+							 <% results["ingredientLines"].forEach(function(ingredient){ %>
+
+											<li><%= ingredient %></li> 
+								<% }) %>
+							</ul>
+							</p> 
+							Get the full recipe:
+							<a href="<%=results.source.sourceRecipeUrl%>/" target="_blank"><%= results.source.sourceDisplayName %> </a>
+					</div>
+						<div class="pure-u-3-5">
+								<% console.log(results) %>
+								<%  for (key in results.flavors){ %>
+									<p class="flavor" style="display:none;">,<%= key %></p> 
+									<p class="percentage" style="display:none;">,<%= results.flavors[key] %></p> 
+								<% } %>
+								<canvas id="myChart" width="400" height="400"></canvas>
+
+						</div>
+					</div>	
 				</div>
-				
-		</div>
-		<div class="pure-u-sm-1-4 ingredients-sec">	
-
-		<% if (results["totalTime"]){ %>
-			<p>
-				Time: <%= results["totalTime"] %>
-			</p>
-			<% } %>
-			<p>
-				Ingredients: 
-			<br>
-			<ul class="ingredients-list">
-			 <% results["ingredientLines"].forEach(function(ingredient){ %>
-
-							<li><%= ingredient %></li> 
-				<% }) %>
-			</ul>
-			</p> 
-			Get the full recipe:
-			<a href="<%=results.source.sourceRecipeUrl%>/" target="_blank"><%= results.source.sourceDisplayName %> </a>
-		</div>
-		
 	</div>
 
-		<div id="map-canvas">
-
-		</div>
 
 
 
 
 <script type="text/javascript">
+var flavor = []
+flavor = $(".flavor").text().split(",")
+flavor.shift();
+console.log(flavor)
+var percentage = []
+percentage = $(".percentage").text().split(",")
+percentage.shift();
+console.log(percentage)
+
+var ctx = $("#myChart").get(0).getContext("2d");
+var data = {
+    labels: flavor,
+    datasets: [
+        {
+            label: "flavors",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: percentage
+        }
+    ]
+};
+
+var myRadarChart = new Chart(ctx).Radar(data);
+
 
 </script>
 

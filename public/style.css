@@ -6,7 +6,7 @@ body{
     margin:0;
     padding:0;
     overflow: auto;
-    background: #f1f1f1;
+ 
 }
 
 
@@ -284,3 +284,8 @@ div.results-heading{
     100% { top: 0; }
 }
 
+@media screen and (max-width: 800px) {
+    .splash-head {
+/*        font-size: 400%;*/
+    }
+}

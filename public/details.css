@@ -1,0 +1,89 @@
+body{
+	display: flex;
+    justify-content: center;
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+    overflow: auto;
+}
+
+
+.search-form {
+	margin: auto;
+
+}
+
+.results-link{
+
+    text-decoration: none;
+}
+
+/*align menu header to left and float items to right*/
+.home-menu {
+        text-align: left;
+    }
+
+.home-menu ul {
+            float: right;
+            
+    }
+
+
+
+
+
+
+/*DETAILS PAGE*/
+
+div.results-heading{
+    margin-top: 100px;
+    width: 100%;
+}
+
+/* .ingredients-list{
+   padding-left: 30px;
+}
+
+.details-box{
+    width: 600px;
+}
+
+.ingredients-sec{
+    text-align: left;
+    padding: 20px;
+    background-color: #FD5A70;
+}*/
+
+.img-sec{
+    height: 540px;
+    width: 380px;
+    margin: 0px
+}
+
+
+
+
+
+/*links*/
+
+.results-link:link {
+    color: black;
+}
+
+.results-link:visited {
+    color: blue;
+}
+
+/*buttons*/
+ .button-warning {
+        background: rgb(223, 117, 20); 
+        }
+
+  .button-success {
+            background: rgb(28, 184, 65);
+        }
+
+
+
+

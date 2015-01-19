@@ -34,8 +34,9 @@ app.use(flash());
 
 
 passport.serializeUser(function(user, done){
-  // console.log("SERIALIZED JUST RAN!");
+  console.log("SERIALIZED JUST RAN!");
   done(null, user.id);
+  console.log(user.id);
 });
 
 passport.deserializeUser(function(id, done){
@@ -47,7 +48,7 @@ passport.deserializeUser(function(id, done){
     })
     .done(function(error,user){
       done(error, user);
-      // console.log(user);
+     
     });
 });
 
@@ -79,14 +80,14 @@ app.post('/submit', function(req,res){
   },
    function(){
     passport.authenticate('local')(req,res,function(){
-      res.redirect('/myrecipes');
+      res.redirect('/stores');
     });
   });
 });
 
 // login
 app.post('/login', passport.authenticate('local', {
-  successRedirect: '/myrecipes',
+  successRedirect: '/stores',
   failureRedirect: '/login',
   failureFlash: true
 }));
@@ -117,7 +118,8 @@ if (!error && response.statusCode == 200) {
 
 // show all recipes
 app.get('/myrecipes', routeMiddleware.checkAuthentication, function(req,res){
-
+  console.log("HELLO");
+  console.log(req.user.getFoods());
     req.user.getFoods().done(function(err, foods){
     res.render('myrecipes', { allFoods: foods});
   });
@@ -208,7 +210,7 @@ var geoLocateStore = function (store, callback) {
 };
 
 
-app.get('/stores', function(req, res){
+app.get('/stores', routeMiddleware.checkAuthentication, function(req, res){
 
   var city = req.query.city;
   var state = req.query.state; // var ingredient = req.query.ingredient;

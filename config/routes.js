@@ -10,7 +10,7 @@ var routeMiddleware = {
 
   preventLoginSignup: function(req, res, next) {
     if (req.user) {
-      res.redirect('/myrecipes');
+      res.redirect('/stores');
     }
     else {
      return next();
