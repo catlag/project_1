@@ -46,7 +46,9 @@ body{
     position: fixed !important;
 }
 
-
+#title{
+    font-size: 6em;
+}
 
 .splash {
     /* absolute center .splash within .splash-container */
@@ -65,26 +67,25 @@ body{
 /* This is the main heading that appears on the blue section */
 .splash-head {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 6em;
     font-weight: bold;
     color: white;
     line-height: 1em;
     border: 3px solid white;
-    padding: 12% ;
+    padding: 5% ;
     font-weight: 100;
     border-radius: 5px;
    
 }
 
 /* This is the subheading that appears on the section */
-.splash-subhead {
+/*.splash-subhead {
     font-size: 2em;
     color: white;
     letter-spacing: 0.05em;
     opacity: 0.8;
     margin-top: 10%%;
 
-}
+}*/
 
 
 /*myrecipes*/

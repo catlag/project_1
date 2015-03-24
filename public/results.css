@@ -12,12 +12,12 @@
 
 .results-link{
 
-    text-decoration: none;
+    text-decoration: blue;
 }
 
 /*align menu header to left and float items to right*/
 .home-menu {
-        text-align: left;
+        text-align: blue;
     }
 
 .home-menu ul {

@@ -1,17 +1,13 @@
 body{
-	display: flex;
-    justify-content: center;
-    height:100%;
-    width:100%;
+    
     margin:0;
     padding:0;
     overflow: auto;
-
 }
 
 
 .search-form {
-	margin: auto;
+    margin: auto;
 
 }
 
@@ -26,79 +22,79 @@ body{
     }
 
 .home-menu ul {
-            float: right;
+      float: right;
             
     }
-
-
-
-
 
 
 /*DETAILS PAGE*/
 
 div.results-heading{
-    margin: 100px 100px 100px 50px ;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    width: 100%;
-    background-color: rgba(208, 199, 201, 0.2);
+    margin-top: 100px;
+    margin-left: 100px;
+    margin-right: 100px;
+    background-color: rgba(32, 244, 197, 0.2);
+    margin-bottom: 50px;
 }
 
- .ingredients-list{
-   font-size: 20px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
+.main_sec{
+  padding-left: 50px;
+  padding-right: 20px;
+  padding-bottom: 75px;
+  margin-top: 75px;
+  width: 400px
 }
 
-/*.details-box{
-    width: 600px;
-}
-
-.ingredients-sec{
-    text-align: left;
-    padding: 20px;
-    background-color: #FD5A70;
-}
-*/
-.img-sec{
-    height: 540px;
-    width: 380px;
-    margin: 0 40px 0 40px;
-    font-size: 30px;
-    padding: 20px;
-}
-
-
-
-.details-sec{
-    margin-top: 40px;
-    margin-bottom: 40px;
-    width: 800px;
-    border-left: 1px solid grey;
-/*    padding-left: 100px;*/
-    padding: 10px 0 30px 100px;
-    font-size: 20px;
-    -webkit-flex-flow: nowrap;
-}
-
-.flavors-sec{
-    padding-left: 100px;
+.details{
+  border-left: 2px dotted grey;
+  margin-top: 75px;
+  margin-bottom: 75px;
+  padding-left: 50px;
 
 }
 
-ul{
-    padding: 0px;
+.graph{
+  
+}
+
+.name_sec h1{
+  font-family: 'Questrial', sans-serif;
+  font-size: 40px;
+}
+
+.time_sec, .rating_sec, .servings_sec{
+  font-family: 'Questrial', sans-serif;
+  font-size: 20px;
+
+}
+
+.time_sec h3, .rating_sec h3, .servings_sec h3, .ingredients_sec h3{
+  font-family: 'Questrial', sans-serif;
+  font-size: 25px;
+  margin-bottom: 5px;
 }
 
 
+
+.flavor_sec{
+  margin-left: 70px;
+  padding-top: 50px;
+  width: 300px;
+}
+
+.ingredients-list li{
+  font-family: 'Questrial', sans-serif;
+  font-size: 25px;
+}
 /*links*/
 
 .results-link:link {
+  font-family: 'Questrial', sans-serif;
     color: black;
 }
 
 .results-link:visited {
+  font-family: 'Questrial', sans-serif;
     color: blue;
 }
 
@@ -113,4 +109,48 @@ ul{
 
 
 
+@media only screen and (max-width: 800px) {
+    div.results-heading{
+    margin-top: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 50px;
+}
+
+  .pure-g{
+    letter-spacing: 0;
+  }
+  img{
+    width:90%;
+  }
+  .details{
+  border-top: 2px dotted grey;
+  border-left: none;
+  margin-top: 50px;
+  margin-bottom: 75px;
+  padding-left: 10px;
+
+}
+.flavor_sec{
+  margin-left: 0px;
+  padding-top: 20px;
+  width: 300px;
+}
+  #myChart{
+    width: 250px !important;
+    height: 250px !important;
+  }
+}
+
+@media only screen and (max-width: 1666px) {
+
+  .details{
+  border-left: none;
+  margin-top: 50px;
+  margin-bottom: 75px;
+  padding-left: 10px;
+
+}
+
+}
 

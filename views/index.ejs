@@ -22,21 +22,22 @@
             </div>
         <% }%>
       <div class="splash-box">
-        <h1 class="splash-head">Grubber</h1>
+        <div class="splash-head">
+          <h1 id="title">Grubber</h1>
+
+        <p>
+        <form action="/search" class="pure-form search-form" method="GET">  
+      <input class="pure-input-2-3" autofocus required type="text" name="recipe" required placeholder="Search for recipes">
+      <button type="submit" class="pure-button">
+        <i class="fa fa-search"></i>
+        
+      </button>
+    </form>
+        </p>
+        </div>
       </div>
         
-        <p class="splash-subhead">
-            Search for foods
-        </p>
-        <p>
-        <form action="/search" class="pure-form search-form" method="GET">	
-			<input class="pure-input-2-3" autofocus required type="text" name="recipe" >
-			<button type="submit" class="pure-button">
-				<i class="fa fa-search"></i>
-				
-			</button>
-		</form>
-        </p>
+
     </div>
 </div>
 
