@@ -1,8 +1,11 @@
 {
   "name": "project_1",
   "version": "1.0.0",
-  "description": "",
+  "description": "A food app",
   "main": "app.js",
+  "engines":{
+    "node": "0.10.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
